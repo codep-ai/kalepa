@@ -15,7 +15,10 @@ class DbController extends Controller
         $databases = $service->loadAllDatabases();
 
         $tables = $service->getTables($databases);
-        dd($tables);
-        //return view('list');
+        $viewData = [
+            'databases' => $databases,
+            'tables' => $tables,
+        ];
+        return view('list', $viewData);
     }
 }

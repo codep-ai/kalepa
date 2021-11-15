@@ -15,10 +15,13 @@
     <body>
         <div>
           <div id="app">
-            <tree-view></tree-view>
-            <home></home>
-            <sec-tree-view></sec-btree-view>
+            <database-list></database-list>
           </div>
+          <script>
+            var appData = {};
+            appData.databases = {!! json_encode($databases) !!};
+            appData.tables = {!! json_encode($tables) !!};
+          </script>
           <script src="{{ asset('js/app.js') }}"></script>
         </div>
     </body>
