@@ -15,7 +15,7 @@
     <body>
         <div>
           <div id="app">
-            <database-list></database-list>
+            <new-database-list></new-database-list>
           </div>
           <script>
             var appData = {};
