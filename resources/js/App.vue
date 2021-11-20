@@ -25,12 +25,13 @@ export default {
     NavBar
   },
   setup () {
+    console.log('running setup')
     const store = useStore()
 
     store.commit('user', {
-      name: 'John Doe',
-      email: 'john@example.com',
-      avatar: 'https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93'
+      name: 'Henry Li',
+      email: 'hengruili@gmail.com',
+      avatar: 'https://avatars.dicebear.com/api/male/henry.svg?options[top][]=shortHair&options[accessoriesChance]=93'
     })
 
     const isAsideLgActive = computed(() => store.state.isAsideLgActive)
