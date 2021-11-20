@@ -72,6 +72,14 @@ const routes = [
     path: '/error',
     name: 'error',
     component: () => import(/* webpackChunkName: "error" */ '../views/Error')
+  },
+  {
+    meta: {
+      title: 'Dataflow',
+    },
+    path: '/dataflow',
+    name: 'dataflow',
+    component: () => import('../views/Dataflow')
   }
 ]
 

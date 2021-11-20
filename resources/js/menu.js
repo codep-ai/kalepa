@@ -1,7 +1,9 @@
 import {
   mdiAccountCircle,
   mdiDesktopMac,
-  mdiGithub,
+  mdiTransitConnection,
+  mdiTransitConnectionVariant,
+  mdiTransitConnectionHorizontal,
   mdiLock,
   mdiAlertCircle,
   mdiMonitorShimmer,
@@ -19,6 +21,14 @@ export default [
       to: '/',
       icon: mdiDesktopMac,
       label: 'Dashboard'
+    }
+  ],
+  'Build',
+  [
+    {
+      label: 'DataFlow',
+      icon: mdiTransitConnectionVariant,
+      to: '/dataflow'
     }
   ],
   'Examples',
@@ -76,16 +86,15 @@ export default [
   'About',
   [
     {
-      href: 'https://justboil.me/tailwind-admin-templates/vue-dashboard',
-      label: 'Premium version',
+      label: 'About ' + appData.appName,
       icon: mdiMonitorShimmer,
       target: '_blank'
     },
     {
-      href: 'https://github.com/justboil/admin-one-vue-tailwind',
-      label: 'GitHub',
-      icon: mdiGithub,
+      href: 'https://trial.ascend.io/ui/v2/organization/hengruili_gmail_com/project/test_dataflow',
+      label: 'Our Benchmark',
+      icon: mdiMonitorShimmer,
       target: '_blank'
-    }
+    },
   ]
 ]

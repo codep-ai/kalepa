@@ -11,6 +11,11 @@
 
 <body>
     <div id="app"> </div>
+    <script>
+        // init app data object
+        var appData = {};
+        appData.appName = {!! json_encode(env('APP_NAME')) !!};
+    </script>
     <script src="{{ mix('js/main.js') }}" type="text/javascript"></script>
 </body>
 

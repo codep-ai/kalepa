@@ -109,7 +109,7 @@ import CardClientBar from '@/components/CardClientBar'
 import TitleSubBar from '@/components/TitleSubBar'
 
 export default {
-  name: 'Home',
+  name: 'Dataflow',
   components: {
     TitleSubBar,
     MainSection,
@@ -125,7 +125,7 @@ export default {
     CardClientBar
   },
   setup () {
-    const titleStack = ref(['Admin', 'Dashboard'])
+    const titleStack = ref(['Admin', 'Dataflow'])
 
     const chartData = ref(null)
 

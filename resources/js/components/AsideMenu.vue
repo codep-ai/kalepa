@@ -11,7 +11,7 @@
         <icon :path="mdiMenu" class="cursor-pointer" size="24" />
       </nav-bar-item>
       <div class="flex-1 px-3">
-        <span>Kalepa</span> <b class="font-black">Data</b>
+        <span>{{appName}}</span> <b class="font-black">Data</b>
       </div>
     </div>
     <div>
@@ -45,6 +45,11 @@ export default {
     menu: {
       type: Array,
       default: () => []
+    },
+  },
+  data: () => {
+    return {
+      appName: appData.appName
     }
   },
   setup () {
