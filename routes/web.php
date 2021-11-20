@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +22,8 @@ Route::post('/process', 'App\Http\Controllers\UploadController@process')->name('
 Route::get('/list', 'App\Http\Controllers\UploadController@list')->name('list');
 
 Route::get('/db/list', 'App\Http\Controllers\DbController@list')->name('dblist');
+*/
+
+Route::get('{any}', function () {
+    return view('app');
+})->where('any', '.*');

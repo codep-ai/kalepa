@@ -1,11 +1,50 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  purge: [
+    './resources/**/*.{vue,js,ts,jsx,tsx}'
+  ],
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        '-1': '-1'
+      },
+      flexGrow: {
+        5: '5'
+      },
+      maxHeight: {
+        'screen-menu': 'calc(100vh - 3.5rem)',
+        modal: 'calc(100vh - 160px)'
+      },
+      transitionProperty: {
+        position: 'right, left, top, bottom, margin, padding',
+        textColor: 'color'
+      },
+      keyframes: {
+        fadeOut: {
+          from: { opacity: 1 },
+          to: { opacity: 0 }
+        },
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 }
+        }
+      },
+      animation: {
+        fadeOut: 'fadeOut 250ms ease-in-out',
+        fadeIn: 'fadeIn 250ms ease-in-out'
+      }
+    }
   },
   variants: {
-    extend: {},
+    extend: {
+      margin: ['last'],
+      fontWeight: ['last'],
+      textColor: ['last']
+    },
+    scrollbar: ['dark', 'rounded']
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('tailwind-scrollbar')
+  ]
 }
