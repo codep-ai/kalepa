@@ -1,89 +1,63 @@
 <template>
+  <modal-box
+    v-model="modalOneActive"
+    title="New Dataflow"
+    button-label="Confirm"
+    has-cancel
+    @confirm="createDataflow"
+  >
+    <field label="Name*">
+      <control
+        type="text"
+        placeholder="Dataflow name"
+        v-model="dataflow.name"
+      />
+      <div
+       v-show="showAlert"
+        class="
+          bg-red-100
+          border border-red-400
+          text-red-700
+          px-4
+          py-3
+          rounded
+          relative
+        "
+        role="alert"
+      >
+        <span class="block sm:inline">Name is required</span>
+      </div>
+    </field>
+    <field label="Description">
+      <control
+        type="textarea"
+        placeholder="Describe this dataflow"
+        v-model="dataflow.description"
+      />
+    </field>
+  </modal-box>
   <title-bar :title-stack="titleStack" />
-  <hero-bar>Dashboard</hero-bar>
+  <section class="px-0 md:px-6 py-6">
+    <jb-buttons>
+      <jb-button
+        color="white"
+        label="New Dataflow"
+        :icon="mdiPlus"
+        @click="modalOneActive = true"
+      />
+    </jb-buttons>
+  </section>
   <main-section>
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-      <card-widget
-        trend="12%"
-        trend-type="up"
-        color="text-green-500"
-        :icon="mdiAccountMultiple"
-        :number="512"
-        label="Clients"
-      />
-      <card-widget
-        trend="12%"
-        trend-type="down"
-        color="text-blue-500"
-        :icon="mdiCartOutline"
-        :number="7770"
-        prefix="$"
-        label="Sales"
-      />
-      <card-widget
-        trend="Overflow"
-        trend-type="alert"
-        color="text-red-500"
-        :icon="mdiChartTimelineVariant"
-        :number="256"
-        suffix="%"
-        label="Performance"
-      />
-    </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
-      <div class="flex flex-col justify-between">
-        <card-transaction-bar
-          v-for="(transaction,index) in transactionBarItems"
-          :key="index"
-          :amount="transaction.amount"
-          :date="transaction.date"
-          :business="transaction.business"
-          :type="transaction.type"
-          :name="transaction.name"
-          :account="transaction.account"/>
-      </div>
-      <div class="flex flex-col justify-between">
-        <card-client-bar
-          v-for="client in clientBarItems"
-          :key="client.id"
-          :name="client.name"
-          :login="client.login"
-          :date="client.created"
-          :progress="client.progress"/>
-      </div>
-    </div>
-
-    <title-sub-bar :icon="mdiChartPie" title="Trends overview"/>
-
-    <card-component
-      title="Performance"
-      :icon="mdiFinance"
-      :header-icon="mdiReload"
-      class="mb-6"
-      @header-icon-click="fillChartData"
-    >
-      <div v-if="chartData">
-        <line-chart :data="chartData" class="h-96"/>
-      </div>
-    </card-component>
-
-    <title-sub-bar :icon="mdiAccountMultiple" title="Clients"/>
-
-    <notification color="info" :icon="mdiMonitorCellphone">
-      <b>Responsive table.</b> Collapses on mobile
-    </notification>
-
-    <card-component :icon="mdiMonitorCellphone" title="Responsive table" has-table>
-      <clients-table />
+    <card-component :icon="mdiTransitConnection" title="Dataflows" has-table>
+      <dataflow-table :dataflowCollection="dataflowCollection" />
     </card-component>
   </main-section>
 </template>
 
 <script>
 // @ is an alias to /src
-import { computed, ref, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { computed, ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import {
   mdiAccountMultiple,
   mdiCartOutline,
@@ -91,61 +65,115 @@ import {
   mdiFinance,
   mdiMonitorCellphone,
   mdiReload,
-  mdiGithub,
-  mdiChartPie
-} from '@mdi/js'
-import * as chartConfig from '@/components/Charts/chart.config'
-import LineChart from '@/components/Charts/LineChart'
-import MainSection from '@/components/MainSection'
-import TitleBar from '@/components/TitleBar'
-import HeroBar from '@/components/HeroBar'
-import CardWidget from '@/components/CardWidget'
-import CardComponent from '@/components/CardComponent'
-import ClientsTable from '@/components/ClientsTable'
-import Notification from '@/components/Notification'
-import JbButton from '@/components/JbButton'
-import CardTransactionBar from '@/components/CardTransactionBar'
-import CardClientBar from '@/components/CardClientBar'
-import TitleSubBar from '@/components/TitleSubBar'
+  mdiChartPie,
+  mdiTransitConnection,
+  mdiTransitConnectionVariant,
+  mdiTransitConnectionHorizontal,
+  mdiPlusBoxOutline,
+  mdiPlus,
+} from "@mdi/js";
+import * as chartConfig from "@/components/Charts/chart.config";
+import LineChart from "@/components/Charts/LineChart";
+import MainSection from "@/components/MainSection";
+import TitleBar from "@/components/TitleBar";
+import HeroBar from "@/components/HeroBar";
+import CardWidget from "@/components/CardWidget";
+import CardComponent from "@/components/CardComponent";
+import DataflowTable from "@/components/DataflowTable";
+import Notification from "@/components/Notification";
+import JbButtons from "@/components/JbButtons";
+import JbButton from "@/components/JbButton";
+import CardTransactionBar from "@/components/CardTransactionBar";
+import CardClientBar from "@/components/CardClientBar";
+import TitleSubBar from "@/components/TitleSubBar";
+import ModalBox from "@/components/ModalBox";
+import Field from "@/components/Field";
+import Control from "@/components/Control";
+import Divider from "@/components/Divider.vue";
 
 export default {
-  name: 'Dataflow',
+  name: "Dataflow",
   components: {
     TitleSubBar,
     MainSection,
-    ClientsTable,
+    DataflowTable,
     LineChart,
     CardComponent,
     CardWidget,
     HeroBar,
     TitleBar,
     Notification,
+    JbButtons,
     JbButton,
     CardTransactionBar,
-    CardClientBar
+    CardClientBar,
+    ModalBox,
+    Field,
+    Control,
+    Divider,
   },
-  setup () {
-    const titleStack = ref(['Admin', 'Dataflow'])
+  setup() {
+    const titleStack = ref(["Admin", "Dataflow"]);
 
-    const chartData = ref(null)
+    const chartData = ref(null);
 
     const fillChartData = () => {
-      chartData.value = chartConfig.sampleChartData()
-    }
+      chartData.value = chartConfig.sampleChartData();
+    };
 
     onMounted(() => {
-      fillChartData()
-    })
+      fillChartData();
+    });
 
-    const store = useStore()
+    const nameHelp = ref("");
 
-    const clientBarItems = computed(() => store.state.clients.slice(0, 3))
+    const store = useStore();
 
-    const transactionBarItems = computed(() => store.state.history.slice(0, 3))
+    const clientBarItems = computed(() => store.state.clients.slice(0, 3));
 
-    const darkMode = computed(() => store.state.darkMode)
+    const transactionBarItems = computed(() => store.state.history.slice(0, 3));
+
+    const darkMode = computed(() => store.state.darkMode);
+
+    const modalOneActive = ref(false);
+
+    const showAlert = ref(false);
+
+    const dataflow = ref({
+      name: "",
+      description: "",
+    });
+    const dataflowCollection = ref([
+      {
+        name: "1st dataflow",
+        created: "2021-11-21",
+      },
+    ]);
+
+    const createDataflow = function (e) {
+      console.log("createDataflow", dataflow.value, dataflow);
+      // sample code
+      if (!dataflow.value.name || dataflow.value.name.trim().length === 0) {
+        modalOneActive.value = true;
+        showAlert.value = true;
+        return;
+      }
+      showAlert.value = false;
+      dataflowCollection.value.push({
+        name: dataflow.value.name,
+        created: "2021-12-20",
+      });
+      dataflow.value.name = '';
+      dataflow.value.description = '';
+    };
 
     return {
+      showAlert,
+      nameHelp,
+      dataflow,
+      dataflowCollection,
+      createDataflow,
+      modalOneActive,
       titleStack,
       chartData,
       fillChartData,
@@ -157,10 +185,14 @@ export default {
       mdiChartTimelineVariant,
       mdiFinance,
       mdiMonitorCellphone,
+      mdiTransitConnection,
+      mdiTransitConnectionVariant,
+      mdiTransitConnectionHorizontal,
       mdiReload,
-      mdiGithub,
-      mdiChartPie
-    }
-  }
-}
+      mdiChartPie,
+      mdiPlusBoxOutline,
+      mdiPlus,
+    };
+  },
+};
 </script>
