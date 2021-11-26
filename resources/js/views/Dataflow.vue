@@ -13,7 +13,7 @@
         v-model="dataflow.name"
       />
       <div
-       v-show="showAlert"
+        v-show="showAlert"
         class="
           bg-red-100
           border border-red-400
@@ -90,6 +90,7 @@ import ModalBox from "@/components/ModalBox";
 import Field from "@/components/Field";
 import Control from "@/components/Control";
 import Divider from "@/components/Divider.vue";
+import axios from "axios";
 
 export default {
   name: "Dataflow",
@@ -143,15 +144,34 @@ export default {
       name: "",
       description: "",
     });
-    const dataflowCollection = ref([
-      {
-        name: "1st dataflow",
-        created: "2021-11-21",
-      },
-    ]);
+    const dataflowCollection = ref([]);
+    const initDataflowCollection = function() {
+          appData.dataflows.forEach(existingDataflow => {
+            dataflowCollection.value.push({
+              name: existingDataflow.name,
+              created: existingDataflow.created_at,
+            });
+          });
+    };
+
+    if (!appData.dataflows) {
+      axios.get(appData.routes.dataflow.list)
+      .then(function (response) {
+        // handle success
+        if (response.data.dataflows) {
+          appData.dataflows = response.data.dataflows;
+          initDataflowCollection();
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+    } else {
+       initDataflowCollection();
+    }
 
     const createDataflow = function (e) {
-      console.log("createDataflow", dataflow.value, dataflow);
       // sample code
       if (!dataflow.value.name || dataflow.value.name.trim().length === 0) {
         modalOneActive.value = true;
@@ -159,12 +179,26 @@ export default {
         return;
       }
       showAlert.value = false;
-      dataflowCollection.value.push({
+      axios.post(appData.routes.dataflow.create, {
         name: dataflow.value.name,
-        created: "2021-12-20",
+        description: dataflow.value.description
+      }).then(function (response) {
+        if (response.data && response.data.dataflow) {
+          if (!appData.dataflows) {
+            appData.dataflows = [];
+          }
+          appData.dataflows.push(response.data.dataflow);
+
+        }
+      }).catch(function(error) {
+        console.log(error)
+      })
+      dataflowCollection.value.push({
+          name: dataflow.value.name,
+          created: new Date(),
       });
-      dataflow.value.name = '';
-      dataflow.value.description = '';
+      dataflow.value.name = "";
+      dataflow.value.description = "";
     };
 
     return {

@@ -13,12 +13,14 @@ class CreateConnectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('connections', function (Blueprint $table) {
+        Schema::create('mssql_connections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('connection_name');
+            $table->string('name');
             $table->string('host');
             $table->string('port');
-            $table->string('database_name');
+            $table->string('dbname');
+            $table->string('username');
+            $table->string('password');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateConnectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('connections');
+        Schema::dropIfExists('mssql_connections');
     }
 }

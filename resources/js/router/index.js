@@ -80,6 +80,22 @@ const routes = [
     path: '/dataflow',
     name: 'dataflow',
     component: () => import('../views/Dataflow')
+  },
+  {
+    meta: {
+      title: 'Project',
+    },
+    path: '/project/:dataflow',
+    name: 'project',
+    component: () => import('../views/Build')
+  },
+  {
+    meta: {
+      title: 'Connection',
+    },
+    path: '/connection/:connectionId',
+    name: 'connection',
+    component: () => import('../views/UseConnection')
   }
 ]
 

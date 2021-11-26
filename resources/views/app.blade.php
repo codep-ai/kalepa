@@ -15,6 +15,17 @@
         // init app data object
         var appData = {};
         appData.appName = {!! json_encode(env('APP_NAME')) !!};
+        appData.routes = {
+            'dataflow': {
+                'list': {!! json_encode(route('dataflowList')) !!},
+                'create': {!! json_encode(route('dataflowCreate')) !!}, 
+            },
+            'connection': {
+                'create': {!! json_encode(route('connectionCreate')) !!}, 
+                'list': {!! json_encode(route('connectionList')) !!}, 
+                'meta': {!! json_encode(route('connectionMeta')) !!}, 
+            }
+        };
     </script>
     <script src="{{ mix('js/main.js') }}" type="text/javascript"></script>
 </body>

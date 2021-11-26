@@ -19,7 +19,6 @@ Route::get('/upload', 'App\Http\Controllers\UploadController@upload')->name('upl
 
 Route::post('/process', 'App\Http\Controllers\UploadController@process')->name('process');
 
-Route::get('/list', 'App\Http\Controllers\UploadController@list')->name('list');
 
 Route::get('/db/list', 'App\Http\Controllers\DbController@list')->name('dblist');
 */

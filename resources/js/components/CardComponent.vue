@@ -53,7 +53,9 @@ export default {
   },
   emits: ['header-icon-click', 'submit'],
   setup (props, { emit }) {
-    const computedHeaderIcon = computed(() => props.headerIcon ?? mdiCog)
+    const computedHeaderIcon = computed(() => {
+      return props.headerIcon ?? false
+    })
 
     const headerIconClick = () => {
       emit('header-icon-click')
