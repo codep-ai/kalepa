@@ -27,9 +27,10 @@
       </div>
     </main-section>
     <main-section>
-        <card-component title="Connections" mb>
-          <db-connection-list :connections="connections"></db-connection-list>
-        </card-component>
+    <div v-if="loadingConnection" class="flex items-center justify-center">
+        <div class="w-16 h-16 border-b-2 border-gray-900 rounded-full animate-spin"></div>
+    </div>
+        <db-connection-list :connections="connections"></db-connection-list>
     </main-section>
   </div>
   <div v-show="showNewConnection">
@@ -85,11 +86,14 @@ export default {
     const showNewConnection = ref(false);
 
     const connections = ref([]);
+    const loadingConnection = ref(false);
     if (!appData.connections) {
       console.log('init connections', route.params.dataflow);
+      loadingConnection.value = true;
       axios.get(appData.routes.connection.list, {params: {dataflow_id: route.params.dataflow}})
         .then(function (response) {
           appData.connections = response.data.connections;
+          loadingConnection.value = false;
           response.data.connections.forEach(connection => {
             connections.value.push(connection);
           });
@@ -148,6 +152,7 @@ export default {
       connections,
       processNewConnection,
       hideNewConnection,
+      loadingConnection
     }
   }
 };
