@@ -27,10 +27,10 @@
       </div>
     </main-section>
     <main-section>
-    <div v-if="loadingConnection" class="flex items-center justify-center">
+      <div v-if="loadingConnection" class="flex items-center justify-center">
         <div class="w-16 h-16 border-b-2 border-gray-900 rounded-full animate-spin"></div>
-    </div>
-        <db-connection-list :connections="connections"></db-connection-list>
+      </div>
+      <db-connection-list :connections="connections"></db-connection-list>
     </main-section>
   </div>
   <div v-show="showNewConnection">
@@ -85,25 +85,29 @@ export default {
     const route = useRoute();
     const showNewConnection = ref(false);
 
-    const connections = ref([]);
     const loadingConnection = ref(false);
-    if (!appData.connections) {
+
+    const dataflowId = route.params.dataflow;
+
+    if (!store.state.connections[dataflowId] || store.state.connections[dataflowId].length === 0) {
       console.log('init connections', route.params.dataflow);
       loadingConnection.value = true;
-      axios.get(appData.routes.connection.list, {params: {dataflow_id: route.params.dataflow}})
+      axios.get(appData.routes.connection.list, { params: { dataflow_id: dataflowId } })
         .then(function (response) {
-          appData.connections = response.data.connections;
           loadingConnection.value = false;
-          response.data.connections.forEach(connection => {
-            connections.value.push(connection);
-          });
+          if (response.data.connections.length > 0) {
+            var object = {};
+            object[dataflowId] = response.data.connections;
+            console.log('object', object);
+            store.commit('basic', {
+              key: 'connections',
+              value: object
+            })
+          }
         });
-    } else {
-      appData.connections.forEach(connection => {
-        connections.value.push(connection);
-      });
       //console.log('store', store.state.connections);
     }
+    const connections = computed(() => store.state.connections[dataflowId]);
 
     const addNewConnection = function (e) {
       console.log('add new connection');
@@ -127,17 +131,20 @@ export default {
 
     const processNewConnection = function (data) {
       hideNewConnection();
-      connections.value.push(
-        {
-          id: data.connection.id,
-          name: data.connection.name,
-          host: data.connection.host,
-          port: data.connection.port,
-          dbname: data.connection.dbname,
-        }
-      );
-      appData.connections.push(data.connection);
-      console.log(connections.value);
+      var existingConnections = store.state.connections;
+      console.log('exist', existingConnections);
+      if (!existingConnections) {
+        existingConnections = {};
+        existingConnections[dataflowId] = [data.connection];
+      } else if(!existingConnections[dataflowId]) {
+        existingConnections[dataflowId] = [data.connection];
+      } else {
+        existingConnections[dataflowId].push(data.connection);
+      }
+      store.commit('basic', {
+        key: 'connections',
+        value: existingConnections
+      })
     };
 
     return {

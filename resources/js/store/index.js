@@ -7,6 +7,8 @@ export default createStore({
     userName: null,
     userEmail: null,
     userAvatar: null,
+    dataflows: [],
+    connections: {},
 
     /* fullScreen - fullscreen form layout (e.g. login page) */
     isFullScreen: false,
@@ -29,6 +31,10 @@ export default createStore({
     /* A fit-them-all commit */
     basic (state, payload) {
       state[payload.key] = payload.value
+    },
+
+    push (state, payload) {
+      state[payload.key].push(payload.value)
     },
 
     /* User */

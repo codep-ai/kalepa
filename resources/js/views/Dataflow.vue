@@ -144,30 +144,26 @@ export default {
       name: "",
       description: "",
     });
-    const dataflowCollection = ref([]);
 
-    const initDataflowCollection = function() {
-          appData.dataflows.forEach(existingDataflow => {
-            dataflowCollection.value.push(existingDataflow);
-          });
-    };
 
-    if (!appData.dataflows) {
+    if (store.state.dataflows.length === 0) {
       axios.get(appData.routes.dataflow.list)
       .then(function (response) {
         // handle success
         if (response.data.dataflows) {
-          appData.dataflows = response.data.dataflows;
-          initDataflowCollection();
+          store.commit('basic', {
+            key: 'dataflows',
+            value: response.data.dataflows
+          });
         }
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       });
-    } else {
-       initDataflowCollection();
     }
+
+    const dataflowCollection = computed(() => store.state.dataflows);
 
     const createDataflow = function (e) {
       // sample code
@@ -182,11 +178,10 @@ export default {
         description: dataflow.value.description
       }).then(function (response) {
         if (response.data && response.data.dataflow) {
-          if (!appData.dataflows) {
-            appData.dataflows = [];
-          }
-          appData.dataflows.push(response.data.dataflow);
-          dataflowCollection.value.push(response.data.dataflow);
+          store.commit('push', {
+            key: 'dataflows',
+            value: response.data.dataflow
+          })
         }
       }).catch(function(error) {
         console.log(error)
