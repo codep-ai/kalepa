@@ -34,23 +34,24 @@
                 </span>
             </div>
             <div class="md:w-1/3 md:text-right">
-                <jb-button
-                    color="Red"
-                    label="Cancel"
-                    @click="cancelNewConnection"
-                />
+                <jb-button color="Red" label="Cancel" @click="cancelNewConnection" />
             </div>
         </div>
     </form>
+    <modal-box v-model="connectionError.hasError" :large-title="connectionError.title" button="danger" shake>
+        <p>{{connectionError.detail}}</p>
+    </modal-box>
 </template>
 
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from 'vue-router';
 
 import JbButtons from '@/components/JbButtons'
 import JbButton from '@/components/JbButton'
 import DbConnectionForm from '@/components/DbConnectionForm'
+import ModalBox from '@/components/ModalBox'
 import axios from "axios";
 
 export default {
@@ -58,12 +59,16 @@ export default {
     components: {
         JbButtons,
         JbButton,
-        DbConnectionForm
+        DbConnectionForm,
+        ModalBox
     },
 
     emits: ['newConnectionCreated', 'cancelNewConnection'],
 
     setup(props, { emit }) {
+        const route = useRoute();
+        console.log('dataflow id', route.params.dataflow);
+
         const mssqlConnectionDetail = ref(
             {
                 name: 'Test MssqlConnetion',
@@ -76,6 +81,12 @@ export default {
         );
         const processing = ref(false);
 
+        const connectionError = ref({
+            hasError: false,
+            title: null,
+            detail: null,
+        });
+
         const createNewMssqlConnection = function () {
             console.log('create new mssql connection', mssqlConnectionDetail.value);
             processing.value = true;
@@ -86,12 +97,17 @@ export default {
                 'dbname': mssqlConnectionDetail.value.dbname,
                 'username': mssqlConnectionDetail.value.username,
                 'password': mssqlConnectionDetail.value.password,
+                'dataflow_id': route.params.dataflow,
                 'dbtype': 'mssql'
             })
                 .then(function (response) {
                     console.log('response', response, emit);
-                    if (response.data.connection) {
+                    if (response.data.connection && !response.data.error) {
                         emit('newConnectionCreated', { connection: response.data.connection });
+                    } else {
+                        connectionError.value.hasError = true;
+                        connectionError.value.title = 'Connection failed';
+                        connectionError.value.detail = response.data.error;
                     }
                     processing.value = false;
                 });
@@ -106,6 +122,7 @@ export default {
             mssqlConnectionDetail,
             processing,
             cancelNewConnection,
+            connectionError
         }
     }
 }

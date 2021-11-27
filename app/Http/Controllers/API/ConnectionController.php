@@ -19,7 +19,7 @@ class ConnectionController extends Controller
     public function list(Request $request): JsonResponse
     {
         //
-        $mssqlConnections = MssqlConnection::all();
+        $mssqlConnections = MssqlConnection::where('dataflow_id', $request->get('dataflow_id'))->get();
         $connections = [];
         foreach ($mssqlConnections as $mssqlConnection) {
             $connection = new stdClass;
@@ -46,6 +46,7 @@ class ConnectionController extends Controller
     public function create(Request $request): JsonResponse
     {
         $details = $request->only([
+            'dataflow_id',
             'name',
             'host',
             'port',
@@ -69,7 +70,7 @@ class ConnectionController extends Controller
                 [
                     'connection' => $connection,
                     'tables' => [],
-                    'error' => 'cannot connect',
+                    'error' => $e->getMessage(),
                 ],
                 Response::HTTP_CREATED
             );

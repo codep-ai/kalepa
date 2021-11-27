@@ -11,8 +11,8 @@
     <tbody>
     <tr v-for="dataflow in dataflowCollection" >
       <td> </td>
-      <td data-label="DataflowName"><router-link :to="/project/ + dataflow.name">{{ dataflow.name }}</router-link></td>
-      <td data-label="Created"><router-link :to="/project/ + dataflow.name">{{ dataflow.created }}</router-link></td>
+      <td data-label="DataflowName"><router-link :to="/project/ + dataflow.id">{{ dataflow.name }}</router-link></td>
+      <td data-label="Created"><router-link :to="/project/ + dataflow.id">{{ dataflow.created_at }}</router-link></td>
       <td > </td>
     </tr>
     </tbody>

@@ -15,6 +15,7 @@ class CreateConnectionsTable extends Migration
     {
         Schema::create('mssql_connections', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('dataflow_id');
             $table->string('name');
             $table->string('host');
             $table->string('port');

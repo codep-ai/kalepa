@@ -1,8 +1,15 @@
 <template>
     <div class="db-collection-list">
-        <div class="db-collection-item" v-for="connection in connections">
-            <div class="collection-name">{{ connection.name }}</div>
-            <div class="collection-detail">
+        <div class="db-collection-item mb-6" v-for="connection in connections">
+            <div class="collection-detail border">
+                <div class="md:flex md:items-center mb-1">
+                    <div class="md:w-1/3">
+                        <label
+                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                        >Name</label>
+                    </div>
+                    <div class="md:w-2/3">{{ connection.name }}</div>
+                </div>
                 <div class="md:flex md:items-center mb-1">
                     <div class="md:w-1/3">
                         <label
@@ -19,7 +26,7 @@
                     </div>
                     <div class="md:w-2/3">{{ connection.port }}</div>
                 </div>
-                <div class="md:flex md:items-center mb-6">
+                <div class="md:flex md:items-center mb-1">
                     <div class="md:w-1/3">
                         <label
                             class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -27,9 +34,11 @@
                     </div>
                     <div class="md:w-2/3">{{ connection.dbname }}</div>
                 </div>
-            </div>
-            <div>
-                <jb-button label="Use" color="info" @click="$router.push('/connection/' + connection.id)" />
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3 text-right">
+                    <jb-button label="Use" color="info" @click="$router.push('/connection/' + connection.id)" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>

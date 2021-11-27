@@ -27,11 +27,9 @@
       </div>
     </main-section>
     <main-section>
-      <div class="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-2">
         <card-component title="Connections" mb>
           <db-connection-list :connections="connections"></db-connection-list>
         </card-component>
-      </div>
     </main-section>
   </div>
   <div v-show="showNewConnection">
@@ -51,6 +49,7 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from 'vue-router';
 
 import MainSection from '@/components/MainSection'
 import CardComponent from '@/components/CardComponent'
@@ -82,18 +81,18 @@ export default {
   setup() {
 
     const store = useStore();
+    const route = useRoute();
     const showNewConnection = ref(false);
 
     const connections = ref([]);
     if (!appData.connections) {
-      console.log('init connections');
-      axios.get(appData.routes.connection.list)
+      console.log('init connections', route.params.dataflow);
+      axios.get(appData.routes.connection.list, {params: {dataflow_id: route.params.dataflow}})
         .then(function (response) {
           appData.connections = response.data.connections;
           response.data.connections.forEach(connection => {
             connections.value.push(connection);
           });
-          store.state.connections = response.data.connections;
         });
     } else {
       appData.connections.forEach(connection => {
@@ -133,6 +132,7 @@ export default {
           dbname: data.connection.dbname,
         }
       );
+      appData.connections.push(data.connection);
       console.log(connections.value);
     };
 

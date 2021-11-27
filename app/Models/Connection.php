@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Connection extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'host', 'port', 'dbname', 'username', 'password'];
+    protected $fillable = ['dataflow_id', 'name', 'host', 'port', 'dbname', 'username', 'password'];
 }

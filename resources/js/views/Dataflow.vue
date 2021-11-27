@@ -145,12 +145,10 @@ export default {
       description: "",
     });
     const dataflowCollection = ref([]);
+
     const initDataflowCollection = function() {
           appData.dataflows.forEach(existingDataflow => {
-            dataflowCollection.value.push({
-              name: existingDataflow.name,
-              created: existingDataflow.created_at,
-            });
+            dataflowCollection.value.push(existingDataflow);
           });
     };
 
@@ -188,15 +186,11 @@ export default {
             appData.dataflows = [];
           }
           appData.dataflows.push(response.data.dataflow);
-
+          dataflowCollection.value.push(response.data.dataflow);
         }
       }).catch(function(error) {
         console.log(error)
       })
-      dataflowCollection.value.push({
-          name: dataflow.value.name,
-          created: new Date(),
-      });
       dataflow.value.name = "";
       dataflow.value.description = "";
     };
