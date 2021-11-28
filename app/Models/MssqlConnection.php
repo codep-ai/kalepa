@@ -31,7 +31,7 @@ class MssqlConnection extends Connection
     {
         $response = new stdClass;
         $response->success = true;
-        $response->data = null;
+        $response->data = [];
         $response->error = null;
         try {
             $handler = static::getHandler($this);

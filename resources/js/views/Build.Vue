@@ -89,6 +89,8 @@ export default {
 
     const dataflowId = route.params.dataflow;
 
+    var existingConnections = store.state.connections;
+
     if (!store.state.connections[dataflowId] || store.state.connections[dataflowId].length === 0) {
       console.log('init connections', route.params.dataflow);
       loadingConnection.value = true;
@@ -96,12 +98,10 @@ export default {
         .then(function (response) {
           loadingConnection.value = false;
           if (response.data.connections.length > 0) {
-            var object = {};
-            object[dataflowId] = response.data.connections;
-            console.log('object', object);
+            existingConnections[dataflowId] = response.data.connections;
             store.commit('basic', {
               key: 'connections',
-              value: object
+              value: existingConnections
             })
           }
         });
@@ -131,7 +131,6 @@ export default {
 
     const processNewConnection = function (data) {
       hideNewConnection();
-      var existingConnections = store.state.connections;
       console.log('exist', existingConnections);
       if (!existingConnections) {
         existingConnections = {};
