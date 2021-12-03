@@ -96,6 +96,7 @@ class ConnectionController extends Controller
        $connection = MssqlConnection::find($connectionId);
        $result = $connection->getTables();
        $tables = [];
+
        foreach ($result->data as $table) {
          $tables[] = $table['TABLE_NAME'];
        }
@@ -103,6 +104,7 @@ class ConnectionController extends Controller
             [
                 'connection' => $connection,
                 'tables' => $tables,
+                'error' => $result->error,
             ],
             Response::HTTP_CREATED
         );

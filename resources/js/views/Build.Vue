@@ -39,6 +39,8 @@
       @cancelNewConnection="hideNewConnection"
     ></mssql-connection>
   </div>
+
+
 </template>
 
 <style scoped>
@@ -77,7 +79,7 @@ export default {
     JbButtons,
     JbButton,
     MssqlConnection,
-    DbConnectionList
+    DbConnectionList,
   },
   setup() {
 
