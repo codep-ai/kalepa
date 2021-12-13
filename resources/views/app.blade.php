@@ -24,6 +24,7 @@
                 'create': {!! json_encode(route('connectionCreate')) !!}, 
                 'list': {!! json_encode(route('connectionList')) !!}, 
                 'meta': {!! json_encode(route('connectionMeta')) !!}, 
+                'savetables': {!! json_encode(route('connectionSaveTables')) !!}, 
             }
         };
     </script>

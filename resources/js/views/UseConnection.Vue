@@ -123,10 +123,21 @@ export default {
                         console.log('error', readDbError.value)
                     }
                     connectionMeta.value.connection = response.data.connection;
+                    var selectedTables = response.data.selected_tables;
                     response.data.tables.forEach(element => {
                        connectionMeta.value.tables.push({
                            'name': element,
-                           'checked': false
+                           'checked': (function(element) {
+                               var selected = false;
+                               for (var i=0; i<selectedTables.length; i++) {
+                                   var selectedTable = selectedTables[i];
+                                   if (element === selectedTable.name) {
+                                       selected = true;
+                                       break;
+                                   }
+                               }
+                               return selected;
+                           })(element)
                        }); 
                     });
                 });
@@ -167,6 +178,7 @@ export default {
             //axios.post()
             // submit selected tables
             console.log('selected tables', submitData);
+            axios.post(appData.routes.connection.savetables, submitData);
 
         }
 

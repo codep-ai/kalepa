@@ -7,6 +7,7 @@ use App\Models\MssqlConnection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Repositories\ConnectionRepository;
 use stdClass;
 
 class ConnectionController extends Controller
@@ -100,58 +101,40 @@ class ConnectionController extends Controller
        foreach ($result->data as $table) {
          $tables[] = $table['TABLE_NAME'];
        }
-        return response()->json(
+       $repo = new ConnectionRepository();
+       $selectedTables = $repo->getConnectionTables($connectionId);
+       return response()->json(
             [
                 'connection' => $connection,
                 'tables' => $tables,
+                'selected_tables' => $selectedTables,
                 'error' => $result->error,
             ],
             Response::HTTP_CREATED
-        );
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Connection  $connection
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Connection $connection)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Connection  $connection
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Connection $connection)
-    {
-        //
+       );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Connection  $connection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Connection $connection)
+    public function saveTables(Request $request): JsonResponse
     {
         //
+        $connectionId = $request->get('connection_id');
+        $selectedTables = $request->get('selectedTables');
+        $repo = new ConnectionRepository();
+        $repo->saveConnectionTables($connectionId, $selectedTables);
+
+        return response()->json(
+            [
+                'connection_id' => $connectionId,
+                'tables' => $selectedTables,
+            ],
+            Response::HTTP_CREATED
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Connection  $connection
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Connection $connection)
-    {
-        //
-    }
 }

@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\BookController;
-use App\Http\Controllers\API\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,3 +33,4 @@ Route::post('/dataflow/create', 'App\Http\Controllers\API\DataflowController@cre
 Route::post('/connection/create', 'App\Http\Controllers\API\ConnectionController@create')->name('connectionCreate');
 Route::get('/connection/list', 'App\Http\Controllers\API\ConnectionController@list')->name('connectionList');
 Route::get('/connection/meta', 'App\Http\Controllers\API\ConnectionController@meta')->name('connectionMeta');
+Route::post('/connection/savetables', 'App\Http\Controllers\API\ConnectionController@saveTables')->name('connectionSaveTables');
