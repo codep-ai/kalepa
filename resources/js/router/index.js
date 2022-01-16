@@ -96,6 +96,30 @@ const routes = [
     path: '/connection/:connectionId',
     name: 'connection',
     component: () => import('../views/UseConnection')
+  },
+  {
+    meta: {
+      title: 'Insight',
+    },
+    path: '/insight',
+    name: 'insight',
+    component: () => import('../views/Insight')
+  },
+  {
+    meta: {
+      title: 'Data Source',
+    },
+    path: '/insight/datasource',
+    name: 'Data source',
+    component: () => import('../views/InsightDataSource')
+  },
+  {
+    meta: {
+      title: 'Preview Data',
+    },
+    path: '/insight/datasource/preview',
+    name: 'Preview Data ',
+    component: () => import('../views/PreviewData')
   }
 ]
 

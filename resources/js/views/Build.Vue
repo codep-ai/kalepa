@@ -96,7 +96,7 @@ export default {
     if (!store.state.connections[dataflowId] || store.state.connections[dataflowId].length === 0) {
       console.log('init connections', route.params.dataflow);
       loadingConnection.value = true;
-      axios.get(appData.routes.connection.list, { params: { dataflow_id: dataflowId } })
+      axios.get(kalepa.appData.routes.connection.list, { params: { dataflow_id: dataflowId } })
         .then(function (response) {
           loadingConnection.value = false;
           if (response.data.connections.length > 0) {

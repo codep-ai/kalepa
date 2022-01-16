@@ -49,7 +49,7 @@ export default {
   },
   data: () => {
     return {
-      appName: appData.appName
+      appName: kalepa.appData.appName
     }
   },
   setup () {

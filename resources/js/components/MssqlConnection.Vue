@@ -90,7 +90,7 @@ export default {
         const createNewMssqlConnection = function () {
             console.log('create new mssql connection', mssqlConnectionDetail.value);
             processing.value = true;
-            axios.post(appData.routes.connection.create, {
+            axios.post(kalepa.appData.routes.connection.create, {
                 'name': mssqlConnectionDetail.value.name,
                 'host': mssqlConnectionDetail.value.host,
                 'port': mssqlConnectionDetail.value.port,

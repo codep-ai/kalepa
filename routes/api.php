@@ -34,3 +34,5 @@ Route::post('/connection/create', 'App\Http\Controllers\API\ConnectionController
 Route::get('/connection/list', 'App\Http\Controllers\API\ConnectionController@list')->name('connectionList');
 Route::get('/connection/meta', 'App\Http\Controllers\API\ConnectionController@meta')->name('connectionMeta');
 Route::post('/connection/savetables', 'App\Http\Controllers\API\ConnectionController@saveTables')->name('connectionSaveTables');
+Route::get('/datasource/list', 'App\Http\Controllers\API\DatasourceController@list')->name('datasourceList');
+Route::get('/datasource/preview', 'App\Http\Controllers\API\DatasourceController@preview')->name('datasourcePreview');

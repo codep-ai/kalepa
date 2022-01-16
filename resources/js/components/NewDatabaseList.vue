@@ -65,7 +65,7 @@
 <script>
 function initDatbaseData() {
   var databases = [];
-  appData.databases.forEach((database) => {
+  kalepa.appData.databases.forEach((database) => {
     var db = {};
     db.name = database;
     db.checked = false;
@@ -76,9 +76,9 @@ function initDatbaseData() {
 
 function initTableData() {
   var tables = {};
-  for (var dbName in appData.tables) {
+  for (var dbName in kalepa.appData.tables) {
     tables[dbName] = [];
-    appData.tables[dbName].forEach((table) => {
+    kalepa.appData.tables[dbName].forEach((table) => {
       var tableData = {};
       tableData.name = table;
       tableData.checked = false;
@@ -89,14 +89,11 @@ function initTableData() {
 }
 export default {
   created: () => {
-    console.log("created", appData);
   },
   beforeCreate: () => {
-    console.log("before", appData);
   },
   methods: {
     changeDatabase: function (e, selectedDatabase) {
-      console.log("test", selectedDatabase);
       this.selectedDatabase = selectedDatabase;
       this.databases.forEach((database) => {
         if (database.name != selectedDatabase.name) {

@@ -29,6 +29,11 @@ export default [
       label: 'DataFlow',
       icon: mdiTransitConnectionVariant,
       to: '/dataflow'
+    },
+    {
+      label: 'Insight',
+      icon: mdiTransitConnectionVariant,
+      to: '/insight'
     }
   ],
   'Examples',
@@ -86,7 +91,7 @@ export default [
   'About',
   [
     {
-      label: 'About ' + appData.appName,
+      label: 'About ' + kalepa.appData.appName,
       icon: mdiMonitorShimmer,
       target: '_blank'
     },

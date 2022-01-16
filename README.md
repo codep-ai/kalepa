@@ -1,3 +1,6 @@
+TODO:
+use mssqlconnection model to get pdo, then get table columns
+
 VUE:
 The composition API is really another way to do the same thing as before. Mainly:
 

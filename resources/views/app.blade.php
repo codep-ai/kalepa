@@ -13,9 +13,10 @@
     <div id="app" > </div>
     <script>
         // init app data object
-        var appData = {};
-        appData.appName = {!! json_encode(env('APP_NAME')) !!};
-        appData.routes = {
+        var kalepa = {}; 
+        kalepa.appData = {};
+        kalepa.appData.appName = {!! json_encode(env('APP_NAME')) !!};
+        kalepa.appData.routes = {
             'dataflow': {
                 'list': {!! json_encode(route('dataflowList')) !!},
                 'create': {!! json_encode(route('dataflowCreate')) !!}, 
@@ -25,6 +26,9 @@
                 'list': {!! json_encode(route('connectionList')) !!}, 
                 'meta': {!! json_encode(route('connectionMeta')) !!}, 
                 'savetables': {!! json_encode(route('connectionSaveTables')) !!}, 
+            },
+            'datasource': {
+                'preview': {!! json_encode(route('datasourcePreview')) !!}
             }
         };
     </script>

@@ -147,7 +147,7 @@ export default {
 
 
     if (store.state.dataflows.length === 0) {
-      axios.get(appData.routes.dataflow.list)
+      axios.get(kalepa.appData.routes.dataflow.list)
       .then(function (response) {
         // handle success
         if (response.data.dataflows) {
@@ -173,7 +173,7 @@ export default {
         return;
       }
       showAlert.value = false;
-      axios.post(appData.routes.dataflow.create, {
+      axios.post(kalepa.appData.routes.dataflow.create, {
         name: dataflow.value.name,
         description: dataflow.value.description
       }).then(function (response) {

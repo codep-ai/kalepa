@@ -9,4 +9,6 @@ class Connection extends Model
 {
     use HasFactory;
     protected $fillable = ['dataflow_id', 'name', 'host', 'port', 'dbname', 'username', 'password'];
+
+    
 }

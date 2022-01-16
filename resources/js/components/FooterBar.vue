@@ -25,7 +25,7 @@ export default {
 
     const year = computed(() => new Date().getFullYear())
 
-    const appName = computed(() => appData.appName)
+    const appName = computed(() => kalepa.appData.appName)
 
     const isFooterBarVisible = computed(() => !store.state.isFullScreen)
 

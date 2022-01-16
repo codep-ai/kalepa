@@ -40,4 +40,16 @@ class ConnectionRepository implements ConnectionRepositoryInterface {
         $rows = DB::select($sql);
         return $rows;
     }
+
+    public function getTableColumns($pdo, string $table) {
+        $sql  = 'exec sp_columns @table_name = :table_name';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($sql, [':table_name' => $table]);
+        $columns = $stmt->fetchAll();
+        return $columns;
+    }
+
+    public function connect($connecion) {
+        
+    }
 }

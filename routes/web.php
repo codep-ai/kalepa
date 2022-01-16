@@ -22,7 +22,6 @@ Route::post('/process', 'App\Http\Controllers\UploadController@process')->name('
 
 Route::get('/db/list', 'App\Http\Controllers\DbController@list')->name('dblist');
 */
-
 Route::get('{any}', function () {
     return view('app');
 })->where('any', '.*');

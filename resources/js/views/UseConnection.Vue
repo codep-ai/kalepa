@@ -111,7 +111,7 @@ export default {
         const readDbError = ref(false);
 
         const loadConnectionMeta = function () {
-            axios.get(appData.routes.connection.meta, {
+            axios.get(kalepa.appData.routes.connection.meta, {
                 params: {
                     id: connectionId
                 }
@@ -178,7 +178,7 @@ export default {
             //axios.post()
             // submit selected tables
             console.log('selected tables', submitData);
-            axios.post(appData.routes.connection.savetables, submitData);
+            axios.post(kalepa.appData.routes.connection.savetables, submitData);
 
         }
 
