@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\S3Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+
+
+use Aws\S3\S3Client;  
 
 class DatasourceController extends Controller
 {
@@ -16,6 +20,17 @@ class DatasourceController extends Controller
      */
     public function preview(): JsonResponse
     {
+        $s = S3Helper::getS3Client();
+            $buckets = $s->listBuckets();
+            dd($buckets);
+return response()->json(
+    [
+        'id'     => 1,
+        'header' => '',
+        'content' => ''
+    ],
+    Response::HTTP_CREATED
+);
         $storagePath = storage_path();
         $file = $storagePath . '/files/kc_house_data.csv';
         $lineNumber = 0;
@@ -43,4 +58,5 @@ class DatasourceController extends Controller
             Response::HTTP_CREATED
         );
     }
+
 }
