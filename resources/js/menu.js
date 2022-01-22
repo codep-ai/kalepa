@@ -11,7 +11,10 @@ import {
   mdiTable,
   mdiViewList,
   mdiTelevisionGuide,
-  mdiResponsive
+  mdiResponsive,
+  mdiAbacus,
+  mdiChartBellCurveCumulative,
+  mdiCogSync, 
 } from '@mdi/js'
 
 export default [
@@ -26,16 +29,27 @@ export default [
   'Build',
   [
     {
-      label: 'DataFlow',
-      icon: mdiTransitConnectionVariant,
+      label: 'AI',
+      icon: mdiAbacus,
+      to: '/insight'
+    },
+    {
+      label: 'BI',
+      icon: mdiChartBellCurveCumulative,
       to: '/dataflow'
     },
     {
-      label: 'Insight',
+      label: 'CI',
       icon: mdiTransitConnectionVariant,
-      to: '/insight'
-    }
+      to: '/'
+    },
+    {
+      label: 'DI',
+      icon: mdiCogSync,
+      to: '/'
+    },
   ],
+  /*
   'Examples',
   [
     {
@@ -88,6 +102,7 @@ export default [
       ]
     }
   ],
+  */
   'About',
   [
     {
@@ -97,7 +112,7 @@ export default [
     },
     {
       href: 'https://trial.ascend.io/ui/v2/organization/hengruili_gmail_com/project/test_dataflow',
-      label: 'Our Benchmark',
+      label: 'Our Team',
       icon: mdiMonitorShimmer,
       target: '_blank'
     },

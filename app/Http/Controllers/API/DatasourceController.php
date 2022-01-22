@@ -20,17 +20,6 @@ class DatasourceController extends Controller
      */
     public function preview(): JsonResponse
     {
-        $s = S3Helper::getS3Client();
-            $buckets = $s->listBuckets();
-            dd($buckets);
-return response()->json(
-    [
-        'id'     => 1,
-        'header' => '',
-        'content' => ''
-    ],
-    Response::HTTP_CREATED
-);
         $storagePath = storage_path();
         $file = $storagePath . '/files/kc_house_data.csv';
         $lineNumber = 0;
