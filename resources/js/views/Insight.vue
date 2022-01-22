@@ -44,7 +44,8 @@ export default {
         const modelOptions = [
             { id: 1, label: 'Predict a value', description: 'Predict a value description' },
             { id: 2, label: 'Make a recommendation', description: 'Make a recommendation description' },
-            { id: 3, label: 'Classify a object', description: 'Classify a object description' }
+            { id: 3, label: 'Classify a object', description: 'Classify a object description' },
+            { id: 4, label: 'Personalize', description: 'Provide personalized experience for customers' }
         ]
 
         const selectedModel = ref({});

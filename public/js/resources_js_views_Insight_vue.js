@@ -32,6 +32,10 @@ __webpack_require__.r(__webpack_exports__);
       id: 3,
       label: 'Classify a object',
       description: 'Classify a object description'
+    }, {
+      id: 4,
+      label: 'Personalize',
+      description: 'Provide personalized experience for customers'
     }];
     var selectedModel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
     selectedModel.value = '';

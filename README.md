@@ -1,19 +1,33 @@
-TODO:
-use mssqlconnection model to get pdo, then get table columns
+INSTALL PHP:
 
-VUE:
-The composition API is really another way to do the same thing as before. Mainly:
+sudo yum install -y amazon-linux-extras
+sudo  amazon-linux-extras | grep php
+sudo amazon-linux-extras enable php7.4
+sudo yum clean metadata
+sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}
 
-* The local state in data is replaced by a call to ref/reactive.
+INSTALL NGINX
 
-* Hooks mounted, beforeDestroy, etc. are replaced by subscriptions to onMounted, onUnmounted etc.
+install git
 
-* Declarations in watch are replaced by calls to watch.
+install composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
 
-* computed properties are replaced by a call to computed in an object passed to reactive.
+install node:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
 
-* The setup function returns an object that contains a composition of all the things that have to remain accessible from outside the setup function, in particular from the template. And this feature replaces old methods.
+git clone https://github.com/hengruili/kalepa.git
+npm install
+composer install
 
-I'd ask sth like: in what cases should it be used.
+install mariadb
+sudo  amazon-linux-extras | grep mariadb
+sudo yum install MariaDB-server MariaDB-client
 
-Nothing is deprecated, so you have now two ways to do the same thing and nothing prevents you from mixing if you want. Nothing except the composition API is better than the old way. And once you adopt it, you will completely abandon the old way of doing things.
+create database kalepa
+use kalepa
+run kalepa.sql
