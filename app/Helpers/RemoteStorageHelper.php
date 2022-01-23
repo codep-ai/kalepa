@@ -30,4 +30,13 @@ class RemoteStorageHelper {
     return $buckets;
   }
 
+  /**
+   * save file into bucket
+   */
+  public function saveFile($options) {
+    $this->storage->putObject(
+      $options
+    );
+  }
+
 }
