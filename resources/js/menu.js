@@ -36,7 +36,7 @@ export default [
     {
       label: 'BI',
       icon: mdiChartBellCurveCumulative,
-      to: '/dataflow'
+      to: '/'
     },
     {
       label: 'CI',
@@ -46,7 +46,7 @@ export default [
     {
       label: 'DI',
       icon: mdiCogSync,
-      to: '/'
+      to: '/dataflow'
     },
   ],
   /*

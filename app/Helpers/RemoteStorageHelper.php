@@ -4,7 +4,7 @@ use Aws\S3\S3Client;
 
 class RemoteStorageHelper {
 
-  private $storage = null;
+  public $storage = null;
 
   public function __construct()
   {
@@ -39,4 +39,11 @@ class RemoteStorageHelper {
     );
   }
 
+  /**
+   * @param array $data ['Bucket', 'Key']
+   */
+  public function getObject(array $data) {
+    $object = $this->storage->getObject($data);
+    return $object;
+  }
 }

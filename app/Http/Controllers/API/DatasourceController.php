@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\RemoteStorageHelper;
 use App\Helpers\S3Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -20,20 +21,32 @@ class DatasourceController extends Controller
      */
     public function preview(): JsonResponse
     {
+        /*
         $storagePath = storage_path();
         $file = $storagePath . '/files/kc_house_data.csv';
+        */
+
+        $bucket = 'dev-demo-land-area';
+        $key = 'dms/Sales/House/kc_house_data.csv';
+        $url = 's3://' . $bucket . '/' . $key;
+        $url = 's3://dev-demo-land-area/dms/Sales/House/kc_house_data.csv';
+
+        $storage = new RemoteStorageHelper();
+        $storage->storage->registerStreamWrapper();
+
+        // Read CSV with fopen
+        $fd = fopen($url, 'r');
         $lineNumber = 0;
-        $fd = fopen($file, 'r');
         $header = null;
         $content = [];
-        while (($line = fgetcsv($fd)) !== FALSE) {
+        while ($line = fgetcsv($fd)) {
             if ($lineNumber === 0) {
                 $header = $line;
             } else {
                 $content[] = $line;
             }
             $lineNumber++;
-            if ($lineNumber > 100) {
+            if ($lineNumber > 50) {
                 break;
             }
         }
