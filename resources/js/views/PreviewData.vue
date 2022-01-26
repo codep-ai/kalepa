@@ -2,28 +2,43 @@
     <main-section>
         <div>
             <label class="font-bold mb-2">Preview Data</label>
-            <button
-                class="float-right inline-flex cursor-pointer justify-center items-center whitespace-nowrap focus:outline-none transition-colors focus:ring duration-150 border rounded ring-blue-700 p-2 hover:bg-blue-600 bg-blue-500 text-white border-blue-600 mr-3 last:mr-0 mb-3"
-                type="submit"
-            >
-                <span class="px-2" @click="confirmData">Confirm</span>
-            </button>
         </div>
         <div class="relative">
             <table>
-                <thead>
-                    <tr>
-                        <th v-for="(header, key) in previewData.header">{{ header }}</th>
-                    </tr>
-                </thead>
+                <tr>
+                    <td>
+                        <table cellspacing="0" cellpadding="1" border="1" width="300">
+                            <tr style="color:white;background-color:grey">
+                                <th class v-for="(header, key) in previewData.header">{{ header }}</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
                 <tbody>
-                    <tr v-for="(row) in previewData.content">
-                        <td v-for="(column) in row">{{ column }}</td>
+                    <tr>
+                        <td>
+                            <div style="width:100%; height:380px; overflow:auto;">
+                                <table cellspacing="0" cellpadding="1" border="1" width="100%">
+                                    <tr v-for="(row) in previewData.content">
+                                        <td v-for="(column) in row">{{ column }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div v-if="loadingData" class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
+        <button
+            class="mt-5 inline-flex cursor-pointer justify-center items-center whitespace-nowrap focus:outline-none transition-colors focus:ring duration-150 border rounded ring-blue-700 p-2 hover:bg-blue-600 bg-blue-500 text-white border-blue-600 mr-3 last:mr-0 mb-3"
+            type="submit"
+        >
+            <span class="px-2" @click="confirmData">Confirm</span>
+        </button>
+        <div
+            v-if="loadingData"
+            class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50"
+        >
             <div class="flex items-center justify-center relative top-1/2">
                 <div class="w-16 h-16 border-b-2 border-gray-900 rounded-full animate-spin"></div>
             </div>
@@ -50,23 +65,17 @@ export default {
         const id = 1;
         const loadingData = ref(false);
         // todo: pass parameters to server
-        kalepa.appData.datasource = {};
         const previewData = ref({
             header: null,
             content: []
         });
-        if (!kalepa.appData.datasource.preview) {
-            loadingData.value=true;
-            axios.get(kalepa.appData.routes.datasource.preview, { params: {} })
-                .then(function (response) {
-                    kalepa.appData.datasource.preview = response.data;
-                    previewData.value.header = response.data.header;
-                    previewData.value.content = response.data.content;
-                    loadingData.value=false;
-                });
-            //console.log('store', store.state.connections);
+        try {
+            previewData.value.header = kalepa.appData.datasource.selectedPreviewDataHeader;
+            previewData.value.content = kalepa.appData.datasource.selectedPreviewData;
+        } catch (e) {
+            console.log('exception', e);
+            router.push({path: "/insight/datasource/select_data"});
         }
-
         const confirmData = function () {
 
         }

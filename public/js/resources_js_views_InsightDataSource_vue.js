@@ -46,7 +46,7 @@ __webpack_require__.r(__webpack_exports__);
         showNotice.value = false;
         kalepa.appData.selectedDataSource = selectedDataSource.value;
         _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
-          path: "/insight/datasource/preview"
+          path: "/insight/datasource/select_data"
         });
       }
     };

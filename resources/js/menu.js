@@ -41,7 +41,7 @@ export default [
     {
       label: 'CI',
       icon: mdiTransitConnectionVariant,
-      to: '/'
+      to: '/ci'
     },
     {
       label: 'DI',

@@ -67,7 +67,7 @@ export default {
             } else {
                showNotice.value = false; 
                kalepa.appData.selectedDataSource = selectedDataSource.value;
-               router.push({path: "/insight/datasource/preview"});
+               router.push({path: "/insight/datasource/select_data"});
             }
         };
 

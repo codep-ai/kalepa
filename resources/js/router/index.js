@@ -115,6 +115,22 @@ const routes = [
   },
   {
     meta: {
+      title: 'Select Data',
+    },
+    path: '/insight/datasource/select_data',
+    name: 'Select Data',
+    component: () => import('../views/SelectData')
+  },
+  {
+    meta: {
+      title: 'CI',
+    },
+    path: '/ci',
+    name: 'CI',
+    component: () => import('../views/CI')
+  },
+  {
+    meta: {
       title: 'Preview Data',
     },
     path: '/insight/datasource/preview',
