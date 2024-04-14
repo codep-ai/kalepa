@@ -32,7 +32,7 @@
     <aside-menu-list
       v-if="hasDropdown"
       :menu="item.menu"
-      :class="{ 'hidden': !isDropdownActive, 'block bg-gray-700 dark:bg-gray-800': isDropdownActive }"
+      :class="{ 'hidden': !isDropdownActive, 'pl-9 block bg-gray-700 dark:bg-gray-800': isDropdownActive }"
       is-submenu-list
     />
   </li>

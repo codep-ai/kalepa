@@ -1,3 +1,5 @@
+
+
 import { createApp } from 'vue'
 
 import App from './App.vue'
@@ -20,7 +22,7 @@ router.beforeEach(to => {
 })
 
 /* Default title tag */
-const defaultDocumentTitle = 'Admin One Vue 3 Tailwind'
+const defaultDocumentTitle = 'AI data platform'
 
 router.afterEach(to => {
   /* Set document title from route meta */

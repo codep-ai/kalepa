@@ -1,29 +1,53 @@
 <template>
     <main-section>
-        <div>
-            <label class="font-bold mb-2">Preview Data</label>
+        <div id="preview-data" v-if="currentStage == 'previewData'">
+            <div>
+                <label class="font-bold mb-2">Preview Data</label>
+            </div>
+            <div class="relative">
+                <table class="table-auto">
+                    <thead>
+                        <tr style="color:white;background-color:grey">
+                            <th class v-for="(header, key) in previewData.header">{{ header }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row) in previewData.content">
+                            <td v-for="(column) in row">{{ column }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <button
-                class="float-right inline-flex cursor-pointer justify-center items-center whitespace-nowrap focus:outline-none transition-colors focus:ring duration-150 border rounded ring-blue-700 p-2 hover:bg-blue-600 bg-blue-500 text-white border-blue-600 mr-3 last:mr-0 mb-3"
+                class="mt-5 inline-flex cursor-pointer justify-center items-center whitespace-nowrap focus:outline-none transition-colors focus:ring duration-150 border rounded ring-blue-700 p-2 hover:bg-blue-600 bg-blue-500 text-white border-blue-600 mr-3 last:mr-0 mb-3"
                 type="submit"
             >
-                <span class="px-2" @click="confirmData">Confirm</span>
+                <span class="px-2" @click="submitData">Submit Job</span>
             </button>
         </div>
-        <div class="relative">
-            <table>
-                <thead>
-                    <tr>
-                        <th v-for="(header, key) in previewData.header">{{ header }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(row) in previewData.content">
-                        <td v-for="(column) in row">{{ column }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div id="preview-prediction" v-if="currentStage == 'previewPrediction'">
+            <div>
+                <label class="font-bold mb-2">Preview Prediction</label>
+            </div>
+            <div class="relative">
+                <table class="table-auto">
+                    <thead>
+                        <tr style="color:white;background-color:grey">
+                            <th class v-for="(header, key) in previewPrediction.header">{{ header }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row) in previewPrediction.content">
+                            <td v-for="(column) in row">{{ column }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div v-if="loadingData" class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
+        <div
+            v-if="loadingData"
+            class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50"
+        >
             <div class="flex items-center justify-center relative top-1/2">
                 <div class="w-16 h-16 border-b-2 border-gray-900 rounded-full animate-spin"></div>
             </div>
@@ -50,31 +74,44 @@ export default {
         const id = 1;
         const loadingData = ref(false);
         // todo: pass parameters to server
-        kalepa.appData.datasource = {};
         const previewData = ref({
             header: null,
             content: []
         });
-        if (!kalepa.appData.datasource.preview) {
-            loadingData.value=true;
-            axios.get(kalepa.appData.routes.datasource.preview, { params: {} })
-                .then(function (response) {
-                    kalepa.appData.datasource.preview = response.data;
-                    previewData.value.header = response.data.header;
-                    previewData.value.content = response.data.content;
-                    loadingData.value=false;
-                });
-            //console.log('store', store.state.connections);
+        const previewPrediction = ref({
+            header: null,
+            content: []
+        });
+        const currentStage = ref('previewData');
+        try {
+            previewData.value.header = kalepa.appData.insight.selectedPreviewDataHeader;
+            previewData.value.content = kalepa.appData.insight.selectedPreviewData;
+            if (!previewData.value.content) {
+                router.push({ path: "/insight/datasource/select_data" });
+            }
+        } catch (e) {
+            console.log('exception', e);
+            router.push({ path: "/insight/datasource/select_data" });
         }
 
-        const confirmData = function () {
-
+        const submitData = function () {
+            loadingData.value = true;
+            axios.post(kalepa.appData.routes.datasource.submitJob, { params: {} })
+                .then(function (response) {
+                    console.log(response);
+                    loadingData.value = false;
+                    currentStage.value = 'previewPrediction';
+                    previewPrediction.value.header = response.data.header;
+                    previewPrediction.value.content = response.data.content;
+                });
         }
 
         return {
             previewData,
-            confirmData,
-            loadingData
+            loadingData,
+            currentStage,
+            previewPrediction,
+            submitData
         }
 
     }

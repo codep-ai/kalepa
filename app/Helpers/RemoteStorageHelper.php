@@ -4,7 +4,7 @@ use Aws\S3\S3Client;
 
 class RemoteStorageHelper {
 
-  private $storage = null;
+  public $storage = null;
 
   public function __construct()
   {
@@ -16,8 +16,8 @@ class RemoteStorageHelper {
         'region' => env('AWS_DEFAULT_REGION'),
         'version' => 'latest',
         'credentials' => [
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY')
+          'key' => env('AWS_ACCESS_KEY_ID'),
+          'secret' => env('AWS_SECRET_ACCESS_KEY')
         ],
     ]);
   }
@@ -39,4 +39,19 @@ class RemoteStorageHelper {
     );
   }
 
+  /**
+   * @param array $data ['Bucket', 'Key']
+   */
+  public function getObject(array $data) {
+    $object = $this->storage->getObject($data);
+    return $object;
+  }
+
+  public function copyObject($source, $targetObject, $targetBucket) {
+    $this->storage->copyObject([
+      'Bucket' => $targetBucket,
+      'Key' => $targetObject,
+      'CopySource' => $source
+    ]);
+  }
 }

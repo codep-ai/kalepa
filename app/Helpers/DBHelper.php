@@ -1,5 +1,6 @@
 <?php
 namespace App\Helpers;
+use App\Helpers\DBConnectionData;
 
 class DBHelper {
 
@@ -14,7 +15,10 @@ class DBHelper {
     return static::$instance;
   }
 
-  public function getPDO(DBConnectionData $data): \PDO {
+  public function getPDO(DBConnectionData $data = null): \PDO {
+    if ($data === null) {
+      $data = DBConnectionData::loadEnvDbConfig();
+    }
     if (!empty($this->PDOs[$data->dbName])) {
       return $this->PDOs[$data->dbName];
     }

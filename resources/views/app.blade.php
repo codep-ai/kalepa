@@ -15,8 +15,14 @@
         // init app data object
         var kalepa = {}; 
         kalepa.appData = {};
+        kalepa.appData.pipeline = {};
+        kalepa.appData.insight = {};
         kalepa.appData.appName = {!! json_encode(env('APP_NAME')) !!};
         kalepa.appData.routes = {
+            'pipeline': {
+                'testConnection': {!! json_encode(route('testConnection')) !!},
+                'saveConnection': {!! json_encode(route('saveConnection')) !!},
+            },
             'dataflow': {
                 'list': {!! json_encode(route('dataflowList')) !!},
                 'create': {!! json_encode(route('dataflowCreate')) !!}, 
@@ -28,7 +34,10 @@
                 'savetables': {!! json_encode(route('connectionSaveTables')) !!}, 
             },
             'datasource': {
-                'preview': {!! json_encode(route('datasourcePreview')) !!}
+                'preview': {!! json_encode(route('datasourcePreview')) !!},
+                'getModels': {!! json_encode(route('getModels')) !!},
+                'submitJob': {!! json_encode(route('submitJob')) !!},
+                'list': {!! json_encode(route('datasourceList')) !!},
             }
         };
     </script>

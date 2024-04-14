@@ -11,14 +11,7 @@ class DbController extends Controller
 {
     //
     public function list() {
-        $service = new MysqlDatabaseService();
-        $databases = $service->loadAllDatabases();
-
-        $tables = $service->getTables($databases);
-        $viewData = [
-            'databases' => $databases,
-            'tables' => $tables,
-        ];
-        return view('list', $viewData);
+        phpinfo();
+        
     }
 }

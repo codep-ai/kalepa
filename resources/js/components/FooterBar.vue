@@ -1,7 +1,7 @@
 <template>
   <footer v-show="isFooterBarVisible" class="bg-white py-2 px-6 dark:bg-gray-900">
     <level>
-      <div class="text-center md:text-left">
+      <div class="text-center md:text-left hidden">
         <b>&copy; {{ year }}, {{appName}}</b>
       </div>
     </level>

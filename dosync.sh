@@ -1,2 +1,2 @@
-rsync -avL --delete --progress -e "ssh -i /home/hli/aws/kalepa.pem" --exclude "node_modules" --exclude "vendor" --exclude "storage" /home/hli/Lab/kalepa/*  ec2-user@ec2-3-25-207-19.ap-southeast-2.compute.amazonaws.com:/var/www/kalepa/
+rsync -ravL --delete --progress -e "ssh -i /home/hli/aws/donny.pem" --exclude "node_modules" --exclude "vendor" --exclude "storage" --exclude ".git" /home/hli/Lab/kalepa/  ec2-user@13.238.21.20:/var/www/kalepa/
 

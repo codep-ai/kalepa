@@ -23,7 +23,7 @@ __webpack_require__.r(__webpack_exports__);
     console.log(_router__WEBPACK_IMPORTED_MODULE_2__["default"].params);
     var dataSources = [{
       id: 1,
-      label: 'House data',
+      label: 'kc_house_data.csv',
       description: 'House data description'
     }];
     var selectedDataSource = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
@@ -46,7 +46,7 @@ __webpack_require__.r(__webpack_exports__);
         showNotice.value = false;
         kalepa.appData.selectedDataSource = selectedDataSource.value;
         _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
-          path: "/insight/datasource/preview"
+          path: "/insight/datasource/select_data"
         });
       }
     };

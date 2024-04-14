@@ -36,3 +36,8 @@ Route::get('/connection/meta', 'App\Http\Controllers\API\ConnectionController@me
 Route::post('/connection/savetables', 'App\Http\Controllers\API\ConnectionController@saveTables')->name('connectionSaveTables');
 Route::get('/datasource/list', 'App\Http\Controllers\API\DatasourceController@list')->name('datasourceList');
 Route::get('/datasource/preview', 'App\Http\Controllers\API\DatasourceController@preview')->name('datasourcePreview');
+Route::get('/datasource/get_models', 'App\Http\Controllers\API\DatasourceController@getModels')->name('getModels');
+Route::any('/datasource/submit_job', 'App\Http\Controllers\API\DatasourceController@submitJob')->name('submitJob');
+Route::any('/datasource/get_predict_result', 'App\Http\Controllers\API\DatasourceController@getPredictResult')->name('getPredictResult');
+Route::any('/pipeline/test_connection', 'App\Http\Controllers\API\PipelineController@testConnection')->name('testConnection');
+Route::any('/pipeline/save_connection', 'App\Http\Controllers\API\PipelineController@saveConnection')->name('saveConnection');

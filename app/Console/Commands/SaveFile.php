@@ -39,19 +39,45 @@ class SaveFile extends Command
     public function handle()
     {
         $storage = new RemoteStorageHelper();
-        $bucket = 'ai-as-a-service-hli';
-        $storagePath = storage_path();
-        $file = $storagePath . '/files/kc_house_data.csv';
-        $storage->saveFile([
-            'Bucket' => $bucket,
-            'Key' => 'House_Data.txt', 
-            'SourceFile' => $file
-        ]);
-        /*
-        $buckets = $storage->listBuckets();
-        foreach($buckets as $bucket) {
-            var_dump($bucket);
+        $s3 = $storage->storage;
+        $bucket = 'dev-demo-land-area';
+        try {
+            $objects = $s3->listObjects([
+                'Bucket' => $bucket
+            ]);
+            foreach ($objects['Contents']  as $object) {
+                if (strpos($object['Key'], 'autoML') !== false) {
+                  echo $object['Key'] . PHP_EOL;
+                }
+            }
+        } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
         }
+        /*
+        $object = $storage->getObject([
+            'Bucket' => 'dev-demo-land-area',
+            'Key' => 'dms/Sales/House/kc_house_data.csv',
+        ]);
+
+        var_dump($object['Body']);
+        var_dump($object['ContentLength']);
+        var_dump($object['ContentType']);
+        $storage->storage->registerStreamWrapper();
+
+        $url = 's3://dev-demo-land-area/dms/Sales/House/kc_house_data.csv';
+
+        // Read CSV with fopen
+        $file = fopen($url, 'r');
+        $linecount = 0;
+        $content = [];
+        while ($line = fgetcsv($file)) {
+            $linecount++;
+            $content[] = $line;
+            if ($linecount > 50) {
+                break;
+            }
+        }
+        var_dump($content);
         */
         return 0;
     }

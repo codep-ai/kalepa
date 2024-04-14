@@ -83,6 +83,22 @@ const routes = [
   },
   {
     meta: {
+      title: 'Pipeline',
+    },
+    path: '/pipeline',
+    name: 'pipeline',
+    component: () => import('../views/Pipeline')
+  },
+  {
+    meta: {
+      title: 'View all sources',
+    },
+    path: '/pipeline/sources',
+    name: 'pipeline_sources',
+    component: () => import('../views/pipeline/sources')
+  },
+  {
+    meta: {
       title: 'Project',
     },
     path: '/project/:dataflow',
@@ -115,11 +131,83 @@ const routes = [
   },
   {
     meta: {
+      title: 'Select Data',
+    },
+    path: '/insight/datasource/select_data',
+    name: 'Select Data',
+    component: () => import('../views/SelectData')
+  },
+  {
+    meta: {
+      title: 'BI',
+    },
+    path: '/bi',
+    name: 'BI',
+    component: () => import('../views/BI')
+  },
+  {
+    meta: {
+      title: 'New Api',
+    },
+    path: '/newapi',
+    name: 'Newapi',
+    component: () => import('../views/newapi')
+  },
+  {
+    meta: {
+      title: 'dbt',
+    },
+    path: '/dbt',
+    name: 'dbt',
+    component: () => import('../views/dbt')
+  },
+  {
+    meta: {
+      title: 'genAI',
+    },
+    path: '/genAI',
+    name: 'genAI',
+    component: () => import('../views/genAI')
+  },
+  {
+    meta: {
       title: 'Preview Data',
     },
-    path: '/insight/datasource/preview',
+    path: '/insight/datasource/preview_data',
     name: 'Preview Data ',
     component: () => import('../views/PreviewData')
+  },
+  {
+    meta: {
+      title: 'Ingestion Mode',
+    },
+    path: '/pipeline/ingestion',
+    name: 'Ingestion Mode',
+    component: () => import('../views/pipeline/ingestion')
+  },
+  {
+    meta: {
+      title: 'Select Model',
+    },
+    path: '/insight/select_model',
+    name: 'Select Model',
+    component: () => import('../views/SelectModel')
+  },
+  {
+    meta: {
+      title: 'Configure',
+    },
+    path: '/pipeline/configure',
+    name: 'Configure',
+    component: () => import('../views/pipeline/configure')
+  },
+  {
+    meta: {
+      title: 'Query Mode',
+    },
+    path: '/pipeline/query_mode',
+    name: 'Query Mode',
+    component: () => import('../views/pipeline/configure_query_mode')
   }
 ]
 

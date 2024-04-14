@@ -26,7 +26,7 @@ export default [
       label: 'Dashboard'
     }
   ],
-  'Build',
+  'Platform',
   [
     {
       label: 'AI',
@@ -36,19 +36,48 @@ export default [
     {
       label: 'BI',
       icon: mdiChartBellCurveCumulative,
-      to: '/dataflow'
+      to: '/bi'
     },
     {
       label: 'CI',
       icon: mdiTransitConnectionVariant,
-      to: '/'
+      to: '/newapi'
     },
     {
       label: 'DI',
       icon: mdiCogSync,
-      to: '/'
+      subLabel: 'Submenus Example',
+      menu: [
+        {
+          label: 'Dataflow',
+          //to: '/dataflow'
+          to: '/pipeline'
+        },
+        {
+          label: 'Data Transformation',
+          to: '/dbt'
+        }
+        {
+          label: 'Data Ingestion',
+          to: '/newapi'
+        }
+      ],
     },
   ],
+  'About',
+  [
+    {
+      label: 'About DATAPAI',
+      icon: mdiMonitorShimmer,
+      target: '_blank'
+    },
+    {
+      href: 'http://www.datap.ai/ourteam',
+      label: 'Our Team',
+      icon: mdiMonitorShimmer,
+      target: '_blank'
+    },
+  ]
   /*
   'Examples',
   [
@@ -103,18 +132,4 @@ export default [
     }
   ],
   */
-  'About',
-  [
-    {
-      label: 'About ' + kalepa.appData.appName,
-      icon: mdiMonitorShimmer,
-      target: '_blank'
-    },
-    {
-      href: 'https://trial.ascend.io/ui/v2/organization/hengruili_gmail_com/project/test_dataflow',
-      label: 'Our Team',
-      icon: mdiMonitorShimmer,
-      target: '_blank'
-    },
-  ]
 ]

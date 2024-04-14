@@ -45,7 +45,7 @@ export default {
 
         console.log(router.params);
         const dataSources = [
-            { id: 1, label: 'House data', description: 'House data description' },
+            { id: 1, label: 'kc_house_data.csv', description: 'House data description' },
         ]
 
         const selectedDataSource = ref({});
@@ -67,7 +67,7 @@ export default {
             } else {
                showNotice.value = false; 
                kalepa.appData.selectedDataSource = selectedDataSource.value;
-               router.push({path: "/insight/datasource/preview"});
+               router.push({path: "/insight/datasource/select_data"});
             }
         };
 

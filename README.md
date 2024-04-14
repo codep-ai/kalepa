@@ -7,6 +7,7 @@ sudo yum clean metadata
 sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}
 
 INSTALL NGINX
+amazon-linux-extras install nginx1
 
 install git
 
@@ -31,3 +32,7 @@ sudo yum install MariaDB-server MariaDB-client
 create database kalepa
 use kalepa
 run kalepa.sql
+
+s3://dev-demo-land-area/dms/Sales/House/kc_house_data.csv
+
+ssh -i Linux-CodeCambat.pem ec2-user@54.252.52.66
