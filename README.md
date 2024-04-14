@@ -36,3 +36,4 @@ run kalepa.sql
 s3://dev-demo-land-area/dms/Sales/House/kc_house_data.csv
 
 ssh -i Linux-CodeCambat.pem ec2-user@54.252.52.66
+to be added
