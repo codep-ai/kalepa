@@ -50,6 +50,12 @@ $kernel = $app->make(Kernel::class);
 
 $response = $kernel->handle(
     $request = Request::capture()
-)->send();
+);
+
+// Get the content of the response
+$content = $response->getContent();
+
+// Send the response to the client's browser
+$response->send();
 
 $kernel->terminate($request, $response);

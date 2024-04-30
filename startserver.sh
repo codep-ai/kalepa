@@ -1,5 +1,5 @@
 php artisan serve --host=0.0.0.0 --port=8000 >/dev/null &
 
-rsync -avL --delete --progress -e "ssh -i /home/hli/aws/kalepa.pem" --exclude "node_modules" --exclude "vendor" --exclude "storage" /home/hli/Lab/kalepa/*  ec2-user@ec2-3-25-207-19.ap-southeast-2.compute.amazonaws.com:/var/www/kalepa/
+rsync -avL --delete --progress -e "ssh -i ~/.ssh/Linux-CodeCambat.pem"  --exclude "vendor" --exclude "storage" ~/git/kalepa/*  ec2-user@3.55.219.134:/var/www/kalepa/
 
 npm run watch-poll 

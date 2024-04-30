@@ -56,7 +56,7 @@ export default [
         {
           label: 'Data Transformation',
           to: '/dbt'
-        }
+        },
         {
           label: 'Data Ingestion',
           to: '/newapi'
