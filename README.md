@@ -96,6 +96,75 @@ use kalepa
 run kalepa.sql
 
 
-15 nom run dev
+15 # run the web service locally in ~/git/kalepa
+
+./start.sh
 
 
+################# this is the expect output  #######
+linlindeMacBook-Pro:kalepa linlin$ ./start.sh
+
+> watch-poll
+> mix watch -- --watch-options-poll=1000
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+● Mix █████████████████████████ emitting (98%)  
+ after emit
+
+
+
+
+● Mix █████████████████████████ done (99%) plugins 
+ WebpackBar:done
+
+                      
+   Laravel Mix v6.0.39   
+                         
+
+✔ Compiled Successfully in 11906ms
+┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────┐
+│                                                                                                                                                                                      File │ Size     │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+│                                                                                                                                                                               /js/main.js │ 5.04 MiB │
+│                                                                                                                                                                              css/main.css │ 6.9 MiB  │
+│                                                                                                                                                                               js/error.js │ 20.1 KiB │
+│                                                                                                                                                                               js/forms.js │ 71.6 KiB │
+│                                                                                                                                                                               js/login.js │ 44 KiB   │
+│                                                                                                                                                                             js/profile.js │ 81.8 KiB │
+│                                                                                                                                                           js/resources_js_views_BI_vue.js │ 12.7 KiB │
+│                                                                                                                                                        js/resources_js_views_Build_vue.js │ 70.8 KiB │
+│                                                                                                                                                     js/resources_js_views_Dataflow_vue.js │ 72.3 KiB │
+│                                                                                                                                            js/resources_js_views_InsightDataSource_vue.js │ 37.3 KiB │
+│                                                                                                                                                      js/resources_js_views_Insight_vue.js │ 49.4 KiB │
+│                                                                                                                                                     js/resources_js_views_Pipeline_vue.js │ 22.1 KiB │
+│                                                                                                                                                  js/resources_js_views_PreviewData_vue.js │ 17.1 KiB │
+│                                                                                                                                                   js/resources_js_views_SelectData_vue.js │ 36.9 KiB │
+│                                                                                                                                                  js/resources_js_views_SelectModel_vue.js │ 16.8 KiB │
+│                                                                                                                                                js/resources_js_views_UseConnection_vue.js │ 83.5 KiB │
+│                                                                                                                                                          js/resources_js_views_dbt_vue.js │ 7.8 KiB  │
+│                                                                                                                                                        js/resources_js_views_genAI_vue.js │ 7.88 KiB │
+│                                                                                                                                                       js/resources_js_views_newapi_vue.js │ 7.92 KiB │
+│                                                                                                                                js/resources_js_views_pipeline_configure_query_mode_vue.js │ 41.5 KiB │
+│                                                                                                                                           js/resources_js_views_pipeline_configure_vue.js │ 70.7 KiB │
+│                                                                                                                                           js/resources_js_views_pipeline_ingestion_vue.js │ 47.7 KiB │
+│                                                                                                                                             js/resources_js_views_pipeline_sources_vue.js │ 22.1 KiB │
+│                                                                                                                                                                          js/responsive.js │ 30.7 KiB │
+│                                                                                                                                                                              js/tables.js │ 32 KiB   │
+│                                                                                                                                                                                  js/ui.js │ 77.6 KiB │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────┘
+webpack compiled successfully
+[Browsersync] Copy the following snippet into your website, just before the closing </body> tag
+<script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.7'><\/script>".replace("HOST", location.hostname));
+//]]></script>
+
+[Browsersync] Access URLs:
+ ----------------------------------
+          UI: http://localhost:3001
+ ----------------------------------
+ UI External: http://localhost:3001
+ ----------------------------------
+[Browsersync] Watching files...
