@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 export default {
-  name: "dbt",
+  name: "genAI",
   components: {
   },
   setup() {

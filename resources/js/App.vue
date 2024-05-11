@@ -29,8 +29,8 @@ export default {
     const store = useStore()
 
     store.commit('user', {
-      name: 'Henry Li',
-      email: 'hengruili@gmail.com',
+      name: 'DataPAI',
+      email: 'donny@datap.ai',
       avatar: 'https://avatars.dicebear.com/api/male/henry.svg?options[top][]=shortHair&options[accessoriesChance]=93'
     })
 

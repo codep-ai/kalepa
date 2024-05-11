@@ -31,7 +31,17 @@ export default [
     {
       label: 'AI',
       icon: mdiAbacus,
-      to: '/insight'
+      subLabel: 'Submenus AI',
+      menu: [
+        {
+          label: 'Machine Learning',
+          to: '/insight'
+        },
+        {
+          label: 'Generative AI',
+          to: '/genAI'
+        }
+      ]
     },
     {
       label: 'BI',
