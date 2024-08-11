@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "genAI",
   components: {},
   setup: function setup() {
-    var biLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('http://platform.datap.ai:5035/');
+    var biLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('https://platform.datap.ai:5035');
     return {
       biLink: biLink
     };

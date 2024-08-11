@@ -16,10 +16,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "dbt",
+  name: "bi",
   components: {},
   setup: function setup() {
-    var biLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('http://platform.datap.ai:8080/');
+    var biLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('https://bi.datap.ai');
     return {
       biLink: biLink
     };

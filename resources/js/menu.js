@@ -40,7 +40,11 @@ export default [
         {
           label: 'Generative AI',
           to: '/genAI'
-        }
+        },
+        {
+          label: 'Gen AI Local',
+          to: '/genAI_local'
+        }   
       ]
     },
     {

@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home'
 
 const routes = [
@@ -10,6 +10,7 @@ const routes = [
     },
     path: '/',
     name: 'home',
+    //component: () => import('../views/BI')
     component: Home
   },
   {
@@ -151,7 +152,7 @@ const routes = [
     },
     path: '/newapi',
     name: 'Newapi',
-    component: () => import('../views/newapi')
+    component: () => import('../views/Newapi')
   },
   {
     meta: {
@@ -168,6 +169,14 @@ const routes = [
     path: '/genAI',
     name: 'genAI',
     component: () => import('../views/genAI')
+  },
+  {
+    meta: {
+      title: 'genAI_local',
+    },
+    path: '/genAI_local',
+    name: 'genAI_local',
+    component: () => import('../views/genAI_local')
   },
   {
     meta: {
@@ -212,7 +221,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  //history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior (to, from, savedPosition) {
     return savedPosition || { top: 0 }

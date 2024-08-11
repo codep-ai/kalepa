@@ -16,7 +16,7 @@ export default {
   components: {
   },
   setup() {
-    const biLink = ref('http://platform.datap.ai:8000/');
+    const biLink = ref('https://newapi.datap.ai');
 
     return {
         biLink

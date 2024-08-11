@@ -12,11 +12,11 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 export default {
-  name: "dbt",
+  name: "bi",
   components: {
   },
   setup() {
-    const biLink = ref('http://platform.datap.ai:8080/');
+    const biLink = ref('https://bi.datap.ai');
 
     return {
         biLink

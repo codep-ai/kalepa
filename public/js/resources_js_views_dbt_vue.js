@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "dbt",
   components: {},
   setup: function setup() {
-    var biLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('http://platform.datap.ai:8035/');
+    var biLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('https://dbt.datap.ai');
     return {
       biLink: biLink
     };
