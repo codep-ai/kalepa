@@ -217,6 +217,14 @@ const routes = [
     path: '/pipeline/query_mode',
     name: 'Query Mode',
     component: () => import('../views/pipeline/configure_query_mode')
+  },
+  {
+    meta: {
+      title: 'Airflow',
+    },
+    path: '/Airflow',
+    name: 'Pro Airflow',
+    component: () => import('../views/Airflow')
   }
 ]
 
