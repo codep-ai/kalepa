@@ -14,7 +14,8 @@ import {
   mdiResponsive,
   mdiAbacus,
   mdiChartBellCurveCumulative,
-  mdiCogSync, 
+  mdiCogSync,
+  mdiAlignHorizontalRight
 } from '@mdi/js'
 
 export default [
@@ -44,7 +45,7 @@ export default [
         {
           label: 'Gen AI Local',
           to: '/genAI_local'
-        }   
+        }
       ]
     },
     {
@@ -55,7 +56,13 @@ export default [
     {
       label: 'CI',
       icon: mdiTransitConnectionVariant,
-      to: '/newapi'
+      // to: '/newapi',
+      menu: [
+        {
+          label: 'Automation',
+          to: '/Airflow'
+        }
+      ]
     },
     {
       label: 'DI',
@@ -76,7 +83,7 @@ export default [
           to: '/newapi'
         }
       ],
-    },
+    }
   ],
   'About',
   [

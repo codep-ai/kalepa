@@ -168,3 +168,9 @@ webpack compiled successfully
  UI External: http://localhost:3001
  ----------------------------------
 [Browsersync] Watching files...
+
+### Possible issues
+1. If the system prompts: No application encryption key has been specified
+  - Create a .env file, add a field called 'APP_KEY'
+  - Go to the terminal and input 'php artisan key:generate', then the key will automatic generated to the 'APP_KEY' field
+  - Restart the system
