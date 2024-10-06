@@ -174,3 +174,16 @@ webpack compiled successfully
   - Create a .env file, add a field called 'APP_KEY'
   - Go to the terminal and input 'php artisan key:generate', then the key will automatic generated to the 'APP_KEY' field
   - Restart the system
+
+2. For the deployment
+  1. If you are deploying the code you wrote, just run the .sync_platform.sh file.
+  2. If you are deploying the code wrote by others:
+    - using 'git pull' to pull the lastest code.
+    - use 18 for nodejs version (nvm use 18)
+    - complie fist by running the .start.sh file
+    - run the .sync_platform.sh file to deploy to the server
+
+3. For the DNS mapping
+  - Finished configuring the nginx ip address
+  - Configure the DNS file (/etc/hosts) for the server name
+  - Restart 
