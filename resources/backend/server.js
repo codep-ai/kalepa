@@ -2,7 +2,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Pool } = require('pg');
+// const { Pool } = require('pg');
+const mysql = require('mysql2/promise');
 
 const app = express();
 const PORT = process.env.PORT || 8432;
@@ -11,12 +12,21 @@ const PORT = process.env.PORT || 8432;
 app.use(bodyParser.json());
 
 // Database configuration
-const pool = new Pool({
-  user: 'your_username',
-  host: 'your_host',
-  database: 'your_database',
-  password: 'your_password',
-  port: 5432, // Default PostgreSQL port
+// const pool = new Pool({
+//   user: 'your_username',
+//   host: 'your_host',
+//   database: 'your_database',
+//   password: 'your_password',
+//   port: 5432, // Default PostgreSQL port
+// });
+
+// Database configuration - MySQL
+const pool = mysql.createPool({
+  user: 'root',
+  host: 'localhost', 
+  database: 'kalepa',
+  password: '12345678',
+  port: 3306
 });
 
 // Routes

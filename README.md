@@ -176,8 +176,8 @@ webpack compiled successfully
   - Restart the system
 
 2. For the deployment
-  1. If you are deploying the code you wrote, just run the .sync_platform.sh file.
-  2. If you are deploying the code wrote by others:
+  - If you are deploying the code you wrote, just run the .sync_platform.sh file.
+  - If you are deploying the code wrote by others:
     - using 'git pull' to pull the lastest code.
     - use 18 for nodejs version (nvm use 18)
     - complie fist by running the .start.sh file
