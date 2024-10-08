@@ -179,11 +179,11 @@ webpack compiled successfully
   - If you are deploying the code you wrote, just run the .sync_platform.sh file.
   - If you are deploying the code wrote by others:
     - using 'git pull' to pull the lastest code.
-    - use 18 for nodejs version (nvm use 18)
-    - complie fist by running the .start.sh file
-    - run the .sync_platform.sh file to deploy to the server
+    - use 18 for nodejs version (nvm use 18).
+    - complie fist by running the .start.sh file.
+    - run the .sync_platform.sh file to deploy to the server.
 
 3. For the DNS mapping
-  - Finished configuring the nginx ip address
-  - Configure the DNS file (/etc/hosts) for the server name
-  - Restart 
+  - Finished configuring the nginx ip address.
+  - Configure the DNS file (/etc/hosts) for the server name.
+  - Restart.
