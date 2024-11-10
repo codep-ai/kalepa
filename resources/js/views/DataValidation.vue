@@ -6,12 +6,43 @@
                 <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Connection Information</h2>
                 <form>
 
+                    <!-- Connection type -->
                     <div class="mb-4 flex space-x-4">
-                        <!-- host -->
+                        <div :class="{ 'w-1/2': dbType === 'Snowflake', 'w-full': dbType !== 'Snowflake' }">
+                            <label for="dbType" class="block text-gray-700 font-medium mb-2">Connection Type</label>
+                            <select id="dbType" v-model="dbType" @blur="validateCI('dbType')" name="dbType"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                <option value="" disabled selected>Connection type</option>
+                                <option value="MSSQL">MSSQL</option>
+                                <option value="MySQL">MySQL</option>
+                                <option value="Postgres">PostgreSQL</option>
+                                <option value="Oracle">Oracle</option>
+                                <option value="Snowflake">Snowflake</option>
+                            </select>
+                            <span class="error">{{ errorsCI.dbType }}</span>
+                        </div>
+
+                        <div class="w-1/2" v-if="dbType == 'Snowflake'">
+                            <label for="schema" class="block text-gray-700 font-medium mb-2">Schema</label>
+                            <input type="text" id="schema" v-model="schema" @blur="validateCI('schema')" name="schema"
+                                placeholder="Please input schema"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <span class="error">{{ errorsCI.schema }}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-4 flex space-x-4">
+
+                        <!-- Host/Account -->
                         <div class="w-1/2">
-                            <label for="hostC" class="block text-gray-700 font-medium mb-2">Host Address</label>
-                            <input type="text" id="host" v-model="hostC" @blur="validateCI('hostC')" name="hostC"
-                                placeholder="Please input host address"
+                            <label :for="dbType === 'Snowflake' ? 'accountC' : 'hostC'"
+                                class="block text-gray-700 font-medium mb-2">
+                                {{ dbType === 'Snowflake' ? 'Account' : 'Host Address' }}
+                            </label>
+                            <input type="text" :id="dbType === 'Snowflake' ? 'accountC' : 'hostC'" v-model="hostC"
+                                @blur="validateCI('hostC')" :name="dbType === 'Snowflake' ? 'accountC' : 'hostC'"
+                                :placeholder="dbType === 'Snowflake' ? 'Please input account' : 'Please input host address'"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <span class="error">{{ errorsCI.hostC }}</span>
                         </div>
@@ -59,7 +90,7 @@
                         </div>
 
                         <!-- Port number -->
-                        <div class="w-1/2">
+                        <div class="w-1/2" v-if="dbType !== 'Snowflake'">
                             <label for="portNumber" class="block text-gray-700 font-medium mb-2">Port Number</label>
                             <input type="text" id="portNumber" v-model="portNumber" @blur="validateCI('portNumber')"
                                 name="portNumber" placeholder="Please input port number"
@@ -68,35 +99,9 @@
                         </div>
                     </div>
 
-                    <!-- Connection type -->
-                    <div class="mb-4 flex space-x-4">
-                        <div :class="{ 'w-1/2': dbType === 'Snowflake', 'w-full': dbType !== 'Snowflake' }">
-                            <label for="dbType" class="block text-gray-700 font-medium mb-2">Connection Type</label>
-                            <select id="dbType" v-model="dbType" @blur="validateCI('dbType')" name="dbType"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                                <option value="" disabled selected>Connection type</option>
-                                <option value="MSSQL">MSSQL</option>
-                                <option value="MySQL">MySQL</option>
-                                <option value="Postgres">PostgreSQL</option>
-                                <option value="Oracle">Oracle</option>
-                                <option value="Snowflake">Snowflake</option>
-                            </select>
-                            <span class="error">{{ errorsCI.dbType }}</span>
-                        </div>
-
-                        <div class="w-1/2" v-if="dbType == 'Snowflake'">
-                            <label for="schema" class="block text-gray-700 font-medium mb-2">Schema</label>
-                            <input type="text" id="schema" v-model="schema" @blur="validateCI('schema')" name="schema"
-                                placeholder="Please input schema"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <span class="error">{{ errorsCI.schema }}</span>
-                        </div>
-
-                    </div>
-
                     <div class="mb-4 flex space-x-4 justify-center">
 
-                        <!-- Connection -->
+                        <!-- Submit -->
                         <div class="flex justify-center">
                             <button type="submit" @click.prevent="validateConnection" :disabled="isSubmiting"
                                 class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
@@ -500,11 +505,13 @@ export default {
             this.validateCI('passwordC');
             this.validateCI('databaseC');
             this.validateCI('conn');
-            this.validateCI('portNumber');
             this.validateCI('dbType');
 
             if (this.dbType === 'Snowflake') {
                 this.validateCI('schema');
+                this.portNumber = "NO_PORT_NUMBER";
+            } else {
+                this.validateCI('portNumber');
             }
 
             // Check if there are any errors
@@ -530,12 +537,13 @@ export default {
                     user: this.userC,
                     password: this.passwordC,
                     database: this.databaseC,
-                    port: this.portNumber,
                     connName: this.conn,
                     dbType: this.dbType,
-                    schema: this.schema,
+                    requestSchema: this.schema,
                 }
             }
+
+            console.log("snowflake提交===>", requestData);
 
             try { // TODO: Create Connection
                 const response = await axios.post('http://localhost:9000/api/create-connection', requestData);
@@ -548,11 +556,13 @@ export default {
                 if (validationStatus === "OK") { // Successful
                     console.log("--->", information);
                     this.clearForm();
+                    alert("Connection created successfully.")
                     // TODO: 成功后的处理
 
                 } else { // Fail
                     console.log("===错了===", information);
-
+                    alert(`Something went wrong: ${information.error}`);
+                    
                 }
 
             } catch (error) {
