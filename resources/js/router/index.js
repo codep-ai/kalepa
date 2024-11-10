@@ -225,7 +225,17 @@ const routes = [
     path: '/Airflow',
     name: 'Pro Airflow',
     component: () => import('../views/Airflow')
-  }
+  },
+  {
+    meta: {
+      title: 'DataValidation',
+    },
+    path: '/data_validation',
+    name: 'Data Validation',
+    component: () => import('../views/DataValidation.vue')
+  },
+
+  
 ]
 
 const router = createRouter({
