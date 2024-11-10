@@ -69,18 +69,29 @@
                     </div>
 
                     <!-- Connection type -->
-                    <div class="mb-4">
-                        <label for="dbType" class="block text-gray-700 font-medium mb-2">Connection Type</label>
-                        <select id="dbType" v-model="dbType" @blur="validateCI('dbType')" name="dbType"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                            <option value="" disabled selected>Please select connection type</option>
-                            <option value="MSSQL">MSSQL</option>
-                            <option value="MySQL">MySQL</option>
-                            <option value="PostgreSQL">PostgreSQL</option>
-                            <option value="Redshift">Oracle</option>
-                            <option value="Snowflake">Snowflake</option>
-                        </select>
-                        <span class="error">{{ errorsCI.dbType }}</span>
+                    <div class="mb-4 flex space-x-4">
+                        <div :class="{ 'w-1/2': dbType === 'Snowflake', 'w-full': dbType !== 'Snowflake' }">
+                            <label for="dbType" class="block text-gray-700 font-medium mb-2">Connection Type</label>
+                            <select id="dbType" v-model="dbType" @blur="validateCI('dbType')" name="dbType"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                <option value="" disabled selected>Connection type</option>
+                                <option value="MSSQL">MSSQL</option>
+                                <option value="MySQL">MySQL</option>
+                                <option value="Postgres">PostgreSQL</option>
+                                <option value="Oracle">Oracle</option>
+                                <option value="Snowflake">Snowflake</option>
+                            </select>
+                            <span class="error">{{ errorsCI.dbType }}</span>
+                        </div>
+
+                        <div class="w-1/2" v-if="dbType == 'Snowflake'">
+                            <label for="schema" class="block text-gray-700 font-medium mb-2">Schema</label>
+                            <input type="text" id="schema" v-model="schema" @blur="validateCI('schema')" name="schema"
+                                placeholder="Please input schema"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <span class="error">{{ errorsCI.schema }}</span>
+                        </div>
+
                     </div>
 
                     <div class="mb-4 flex space-x-4 justify-center">
@@ -115,7 +126,7 @@
 
                         <!-- user -->
                         <div class="w-1/2">
-                            <label for="userV" class="block text-gray-700 font-medium mb-2">User Name</label>
+                            <label for="userV" class="block text-gray-700 font-medium mb-2">Target DB User Name</label>
                             <input type="text" id="userV" v-model="userV" @blur="validateVI('userV')" name="userV"
                                 placeholder="Please input user name"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -206,6 +217,16 @@
                         </div>
                     </div>
 
+                    <!-- Schema name -->
+                    <div class="mb-4">
+                        <label for="schema" class="block text-gray-700 font-medium mb-2">Target DB's Schema Name</label>
+                        <input type="text" id="target_conn" v-model="schema" @blur="validateVI('schema')"
+                            name="target_conn" placeholder="Please input target DB's shcema name"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <span class="error">{{ errorsVI.schema }}</span>
+                    </div>
+
+
                     <div class="mb-4 flex space-x-4 justify-center">
 
                         <!-- Column -->
@@ -266,6 +287,7 @@ export default {
             resultType: '',
             content: '',
 
+            schema: '',
             errorsVI: {},
             errorsCI: {},
             isSubmiting: false
@@ -302,7 +324,10 @@ export default {
             if (field === 'content' && !this.content) {
                 this.errorsVI.content = 'Result content is required'
             }
-            
+            if (field === 'schema' && !this.schema) {
+                this.errorsVI.schema = 'Schema name is required'
+            }
+
         },
 
         validateCI(field) {
@@ -334,6 +359,9 @@ export default {
             if (field === 'dbType' && !this.dbType) {
                 this.errorsCI.dbType = 'Connection type is required'
             }
+            if (field === 'schema' && !this.schema) {
+                this.errorsCI.schema = 'Schema name is required'
+            }
         },
 
         // Column validation
@@ -351,6 +379,7 @@ export default {
             this.validateVI('dbType');
             this.validateVI('resultType');
             this.validateVI('content');
+            this.validateVI('schema');
 
             // Check if there are any errors
             if (Object.values(this.errorsVI).some(error => error)) {
@@ -359,7 +388,6 @@ export default {
                 return;
             }
 
-            // TODO: 提交逻辑
             const requestData = {
                 host: this.hostV,
                 user: this.userV,
@@ -367,10 +395,12 @@ export default {
                 database: this.databaseV,
                 source_conn: this.source_conn,
                 target_conn: this.target_conn,
-                resultType: this.resultType
+                resultType: this.resultType,
+                schema: this.schema,
             };
 
             try {
+
                 const response = await axios.post('http://localhost:9000/api/validation/column', requestData);
                 const { data } = response;
                 const { validationStatus, information } = data;
@@ -380,6 +410,7 @@ export default {
                 if (validationStatus === "OK") { // Successful
                     console.log("--->", information);
                     this.clearForm();
+                    alert("Row Validation successed, please check at dbt");
                     // TODO: 成功后的处理
 
                 } else { // Fail
@@ -410,6 +441,8 @@ export default {
             this.validateVI('dbType');
             this.validateVI('resultType');
             this.validateVI('content');
+            this.validateVI('schema');
+
 
             // Check if there are any errors
             if (Object.values(this.errorsVI).some(error => error)) {
@@ -425,7 +458,8 @@ export default {
                 database: this.databaseV,
                 source_conn: this.source_conn,
                 target_conn: this.target_conn,
-                resultType: this.resultType
+                resultType: this.resultType,
+                schema: this.schema,
             };
 
             try {
@@ -439,6 +473,7 @@ export default {
                 if (validationStatus === "OK") { // Successful
                     console.log("--->", information);
                     this.clearForm();
+                    alert("Row Validation successed, please check at dbt");
                     // TODO: 成功后的处理
 
                 } else { // Fail
@@ -460,13 +495,17 @@ export default {
             this.isSubmiting = true;
 
             // Run validation on all fields
-            this.validateCI('host');
-            this.validateCI('user');
-            this.validateCI('password');
-            this.validateCI('database');
+            this.validateCI('hostC');
+            this.validateCI('userC');
+            this.validateCI('passwordC');
+            this.validateCI('databaseC');
             this.validateCI('conn');
             this.validateCI('portNumber');
             this.validateCI('dbType');
+
+            if (this.dbType === 'Snowflake') {
+                this.validateCI('schema');
+            }
 
             // Check if there are any errors
             if (Object.values(this.errorsCI).some(error => error)) {
@@ -475,15 +514,28 @@ export default {
                 return;
             }
 
-            const requestData = {
-                host: this.host,
-                user: this.user,
-                password: this.password,
-                database: this.database,
-                source_conn: this.source_conn,
-                target_conn: this.target_conn,
-                // dbType: this.dbType
+            let requestData = {
+                host: this.hostC,
+                user: this.userC,
+                password: this.passwordC,
+                database: this.databaseC,
+                port: this.portNumber,
+                connName: this.conn,
+                dbType: this.dbType,
             };
+
+            if (this.schema != null && this.dbType === 'Snowflake') {
+                requestData = {
+                    host: this.hostC,
+                    user: this.userC,
+                    password: this.passwordC,
+                    database: this.databaseC,
+                    port: this.portNumber,
+                    connName: this.conn,
+                    dbType: this.dbType,
+                    schema: this.schema,
+                }
+            }
 
             try { // TODO: Create Connection
                 const response = await axios.post('http://localhost:9000/api/create-connection', requestData);
@@ -502,8 +554,9 @@ export default {
                     console.log("===错了===", information);
 
                 }
-            } catch {
 
+            } catch (error) {
+                console.log("出错了=====> ", error)
             } finally {
                 this.isSubmiting = false;
             }
@@ -511,14 +564,26 @@ export default {
 
         // clear all the input
         clearForm() {
-            this.host = '';
-            this.user = '';
-            this.password = '';
+
+            this.hostC = '';
+            this.hostV = '';
+            this.userC = '';
+            this.userV = '';
+            this.passwordC = '';
+            this.passwordV = '';
+            this.databaseC = '';
+            this.databaseV = '';
             this.database = '';
-            this.source_conn = '';
+            this.conn = '',
+                this.source_conn = '';
+            this.schema = '';
             this.target_conn = '';
+            this.resultType = '';
+            this.portNumber = '';
+            this.content = '';
             this.dbType = '';
-            this.errors = {};
+            this.errorsC = {};
+            this.errorsV = {};
         },
     },
 
