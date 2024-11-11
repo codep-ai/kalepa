@@ -81,7 +81,11 @@ export default [
         {
           label: 'Data Ingestion',
           to: '/newapi'
-        }
+        },
+        {
+          label: 'Data Validation',
+          to: 'data_validation'
+        },
       ],
     }
   ],
