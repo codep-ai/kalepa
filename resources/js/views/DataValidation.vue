@@ -190,7 +190,7 @@
                                     <span class="ml-2">Failed Only</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" value="ALL_DATA" v-model="resultType"
+                                    <input type="radio" value="ALL_DATA" v-model="content"
                                         class="form-radio h-4 w-4 text-blue-600">
                                     <span class="ml-2">All Data</span>
                                 </label>
@@ -402,6 +402,7 @@ export default {
                 target_conn: this.target_conn,
                 resultType: this.resultType,
                 schema: this.schema,
+                content: this.content,
             };
 
             try {
@@ -465,6 +466,7 @@ export default {
                 target_conn: this.target_conn,
                 resultType: this.resultType,
                 schema: this.schema,
+                content: this.content,
             };
 
             try {
